@@ -38,13 +38,14 @@ const defaultPayload = JSON.stringify({
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Weatherman</title>
     <style>
-      body { font-family: Inter, system-ui, sans-serif; margin: 0; background: #0b1020; color: #e6edf7; }
+      * { box-sizing: border-box; }
+      body { font-family: Inter, system-ui, sans-serif; margin: 0; background: #0b1020; color: #e6edf7; overflow-x: hidden; }
       main { max-width: 980px; margin: 0 auto; padding: 2rem 1rem 4rem; }
       h1 { margin: 0; font-size: 2rem; }
       h2 { margin: 0 0 .75rem; font-size: 1.1rem; }
       .sub { color: #a3b3d1; margin-top: .5rem; }
       .grid { margin-top: 1.5rem; display: grid; gap: .9rem; }
-      .card { background: #141b31; border: 1px solid #273255; border-radius: 12px; padding: 1rem; }
+      .card { background: #141b31; border: 1px solid #273255; border-radius: 12px; padding: 1rem; overflow: hidden; }
       .meta { color: #9db0d4; font-size: .9rem; display: flex; gap: .75rem; flex-wrap: wrap; }
       .leader-wrap { margin-top: 1.5rem; }
       table { border-collapse: collapse; width: 100%; max-width: 520px; }
@@ -53,14 +54,15 @@ const defaultPayload = JSON.stringify({
       td { color: #d9e4fa; }
       .winner { color: #86efac; font-weight: 600; }
       a { color: #8cc0ff; text-decoration: none; }
+      code { word-break: break-all; }
       a:hover { text-decoration: underline; }
       .empty { margin-top: 2rem; color: #9db0d4; }
 
       .form-grid { display: grid; gap: .6rem; }
       .row { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
       label { font-size: .85rem; color: #b7c5e2; display: block; margin-bottom: .2rem; }
-      input, textarea, select { width: 100%; border: 1px solid #2c3a61; background: #0f1730; color: #eaf1ff; border-radius: 10px; padding: .62rem .7rem; font: inherit; }
-      textarea { min-height: 150px; line-height: 1.35; }
+      input, textarea, select { width: 100%; max-width: 100%; border: 1px solid #2c3a61; background: #0f1730; color: #eaf1ff; border-radius: 10px; padding: .62rem .7rem; font: inherit; }
+      textarea { min-height: 150px; line-height: 1.35; overflow-wrap: anywhere; }
       button { border: 1px solid #3f568d; background: #1c2a4d; color: #eaf1ff; border-radius: 10px; padding: .7rem .9rem; cursor: pointer; font-weight: 600; }
       button:hover { background: #243866; }
       .muted { color: #98abd3; font-size: .85rem; }
@@ -115,15 +117,9 @@ const defaultPayload = JSON.stringify({
             </div>
           </div>
 
-          <div class="row">
-            <div>
-              <label for="backtest_windows">Rolling backtest windows</label>
-              <input id="backtest_windows" type="number" value="3" min="1" max="20" />
-            </div>
-            <div>
-              <label>Auth</label>
-              <input value="Server-managed (no token needed)" disabled />
-            </div>
+          <div>
+            <label for="backtest_windows">Rolling backtest windows</label>
+            <input id="backtest_windows" type="number" value="3" min="1" max="20" />
           </div>
 
           <div>
