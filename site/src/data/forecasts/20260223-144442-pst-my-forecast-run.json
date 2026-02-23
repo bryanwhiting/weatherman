@@ -1,0 +1,2353 @@
+{
+  "request": {
+    "start_datetime": "2026-01-01T00:00:00",
+    "granularity": "1d",
+    "series": [
+      [
+        100.0,
+        102.0,
+        104.0,
+        106.0,
+        108.0,
+        110.0,
+        112.0,
+        114.0,
+        116.0,
+        118.0,
+        120.0,
+        122.0,
+        124.0,
+        126.0,
+        128.0,
+        130.0,
+        132.0,
+        134.0,
+        136.0,
+        138.0,
+        140.0,
+        142.0,
+        144.0,
+        146.0,
+        148.0,
+        150.0,
+        152.0,
+        154.0,
+        156.0,
+        1000.0,
+        160.0,
+        162.0,
+        164.0,
+        166.0,
+        168.0,
+        170.0,
+        172.0,
+        174.0,
+        176.0,
+        178.0,
+        180.0,
+        182.0,
+        184.0,
+        186.0,
+        188.0,
+        190.0,
+        192.0,
+        194.0,
+        196.0
+      ],
+      [
+        13.0,
+        18.0,
+        25.0,
+        17.0,
+        9.0,
+        14.0,
+        22.0,
+        12.0,
+        18.0,
+        25.0,
+        17.0,
+        9.0,
+        14.0,
+        22.0,
+        13.0,
+        18.0,
+        25.0,
+        17.0,
+        9.0,
+        14.0,
+        22.0,
+        12.0,
+        18.0,
+        25.0,
+        17.0,
+        9.0,
+        14.0,
+        22.0,
+        13.0,
+        18.0,
+        25.0,
+        17.0,
+        9.0,
+        14.0,
+        22.0,
+        12.0,
+        18.0,
+        25.0,
+        17.0,
+        9.0,
+        14.0,
+        22.0,
+        13.0,
+        18.0,
+        25.0,
+        17.0,
+        9.0,
+        14.0,
+        22.0
+      ],
+      [
+        113.0,
+        120.0,
+        129.0,
+        123.0,
+        117.0,
+        124.0,
+        134.0,
+        126.0,
+        134.0,
+        143.0,
+        137.0,
+        131.0,
+        138.0,
+        148.0,
+        141.0,
+        148.0,
+        157.0,
+        151.0,
+        145.0,
+        152.0,
+        162.0,
+        154.0,
+        162.0,
+        171.0,
+        165.0,
+        159.0,
+        166.0,
+        176.0,
+        169.0,
+        176.0,
+        185.0,
+        179.0,
+        173.0,
+        180.0,
+        190.0,
+        182.0,
+        190.0,
+        199.0,
+        193.0,
+        187.0,
+        194.0,
+        204.0,
+        197.0,
+        204.0,
+        213.0,
+        207.0,
+        201.0,
+        208.0,
+        218.0
+      ]
+    ],
+    "horizon": 7,
+    "model": "nixtla",
+    "series_names": [
+      "trend",
+      "seasonal",
+      "combined"
+    ],
+    "series_name": null,
+    "use_m5": false,
+    "m5_series_count": 3,
+    "compare_algorithms": true,
+    "backtest": true,
+    "backtest_windows": 3
+  },
+  "backend": "nixtla",
+  "history": [
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-01 00:00:00",
+      "y": 100.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-02 00:00:00",
+      "y": 102.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-03 00:00:00",
+      "y": 104.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-04 00:00:00",
+      "y": 106.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-05 00:00:00",
+      "y": 108.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-06 00:00:00",
+      "y": 110.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-07 00:00:00",
+      "y": 112.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-08 00:00:00",
+      "y": 114.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-09 00:00:00",
+      "y": 116.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-10 00:00:00",
+      "y": 118.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-11 00:00:00",
+      "y": 120.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-12 00:00:00",
+      "y": 122.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-13 00:00:00",
+      "y": 124.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-14 00:00:00",
+      "y": 126.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-15 00:00:00",
+      "y": 128.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-16 00:00:00",
+      "y": 130.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-17 00:00:00",
+      "y": 132.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-18 00:00:00",
+      "y": 134.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-19 00:00:00",
+      "y": 136.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-20 00:00:00",
+      "y": 138.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-21 00:00:00",
+      "y": 140.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-22 00:00:00",
+      "y": 142.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-23 00:00:00",
+      "y": 144.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-24 00:00:00",
+      "y": 146.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-25 00:00:00",
+      "y": 148.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-26 00:00:00",
+      "y": 150.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-27 00:00:00",
+      "y": 152.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-28 00:00:00",
+      "y": 154.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-29 00:00:00",
+      "y": 156.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-30 00:00:00",
+      "y": 1000.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-01-31 00:00:00",
+      "y": 160.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-01 00:00:00",
+      "y": 162.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-02 00:00:00",
+      "y": 164.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-03 00:00:00",
+      "y": 166.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-04 00:00:00",
+      "y": 168.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-05 00:00:00",
+      "y": 170.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-06 00:00:00",
+      "y": 172.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-07 00:00:00",
+      "y": 174.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-08 00:00:00",
+      "y": 176.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-09 00:00:00",
+      "y": 178.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-10 00:00:00",
+      "y": 180.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-11 00:00:00",
+      "y": 182.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-12 00:00:00",
+      "y": 184.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-13 00:00:00",
+      "y": 186.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-14 00:00:00",
+      "y": 188.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-15 00:00:00",
+      "y": 190.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-16 00:00:00",
+      "y": 192.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-17 00:00:00",
+      "y": 194.0
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-18 00:00:00",
+      "y": 196.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-01 00:00:00",
+      "y": 13.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-02 00:00:00",
+      "y": 18.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-03 00:00:00",
+      "y": 25.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-04 00:00:00",
+      "y": 17.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-05 00:00:00",
+      "y": 9.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-06 00:00:00",
+      "y": 14.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-07 00:00:00",
+      "y": 22.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-08 00:00:00",
+      "y": 12.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-09 00:00:00",
+      "y": 18.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-10 00:00:00",
+      "y": 25.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-11 00:00:00",
+      "y": 17.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-12 00:00:00",
+      "y": 9.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-13 00:00:00",
+      "y": 14.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-14 00:00:00",
+      "y": 22.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-15 00:00:00",
+      "y": 13.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-16 00:00:00",
+      "y": 18.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-17 00:00:00",
+      "y": 25.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-18 00:00:00",
+      "y": 17.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-19 00:00:00",
+      "y": 9.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-20 00:00:00",
+      "y": 14.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-21 00:00:00",
+      "y": 22.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-22 00:00:00",
+      "y": 12.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-23 00:00:00",
+      "y": 18.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-24 00:00:00",
+      "y": 25.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-25 00:00:00",
+      "y": 17.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-26 00:00:00",
+      "y": 9.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-27 00:00:00",
+      "y": 14.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-28 00:00:00",
+      "y": 22.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-29 00:00:00",
+      "y": 13.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-30 00:00:00",
+      "y": 18.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-01-31 00:00:00",
+      "y": 25.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-01 00:00:00",
+      "y": 17.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-02 00:00:00",
+      "y": 9.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-03 00:00:00",
+      "y": 14.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-04 00:00:00",
+      "y": 22.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-05 00:00:00",
+      "y": 12.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-06 00:00:00",
+      "y": 18.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-07 00:00:00",
+      "y": 25.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-08 00:00:00",
+      "y": 17.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-09 00:00:00",
+      "y": 9.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-10 00:00:00",
+      "y": 14.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-11 00:00:00",
+      "y": 22.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-12 00:00:00",
+      "y": 13.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-13 00:00:00",
+      "y": 18.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-14 00:00:00",
+      "y": 25.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-15 00:00:00",
+      "y": 17.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-16 00:00:00",
+      "y": 9.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-17 00:00:00",
+      "y": 14.0
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-18 00:00:00",
+      "y": 22.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-01 00:00:00",
+      "y": 113.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-02 00:00:00",
+      "y": 120.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-03 00:00:00",
+      "y": 129.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-04 00:00:00",
+      "y": 123.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-05 00:00:00",
+      "y": 117.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-06 00:00:00",
+      "y": 124.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-07 00:00:00",
+      "y": 134.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-08 00:00:00",
+      "y": 126.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-09 00:00:00",
+      "y": 134.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-10 00:00:00",
+      "y": 143.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-11 00:00:00",
+      "y": 137.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-12 00:00:00",
+      "y": 131.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-13 00:00:00",
+      "y": 138.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-14 00:00:00",
+      "y": 148.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-15 00:00:00",
+      "y": 141.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-16 00:00:00",
+      "y": 148.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-17 00:00:00",
+      "y": 157.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-18 00:00:00",
+      "y": 151.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-19 00:00:00",
+      "y": 145.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-20 00:00:00",
+      "y": 152.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-21 00:00:00",
+      "y": 162.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-22 00:00:00",
+      "y": 154.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-23 00:00:00",
+      "y": 162.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-24 00:00:00",
+      "y": 171.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-25 00:00:00",
+      "y": 165.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-26 00:00:00",
+      "y": 159.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-27 00:00:00",
+      "y": 166.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-28 00:00:00",
+      "y": 176.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-29 00:00:00",
+      "y": 169.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-30 00:00:00",
+      "y": 176.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-01-31 00:00:00",
+      "y": 185.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-01 00:00:00",
+      "y": 179.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-02 00:00:00",
+      "y": 173.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-03 00:00:00",
+      "y": 180.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-04 00:00:00",
+      "y": 190.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-05 00:00:00",
+      "y": 182.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-06 00:00:00",
+      "y": 190.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-07 00:00:00",
+      "y": 199.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-08 00:00:00",
+      "y": 193.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-09 00:00:00",
+      "y": 187.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-10 00:00:00",
+      "y": 194.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-11 00:00:00",
+      "y": 204.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-12 00:00:00",
+      "y": 197.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-13 00:00:00",
+      "y": 204.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-14 00:00:00",
+      "y": 213.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-15 00:00:00",
+      "y": 207.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-16 00:00:00",
+      "y": 201.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-17 00:00:00",
+      "y": 208.0
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-18 00:00:00",
+      "y": 218.0
+    }
+  ],
+  "forecast": [
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-19 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 214.7203441717174
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-20 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 211.760322293362
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-21 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 218.86834001474526
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-22 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 223.01769843500972
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-23 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 220.60473963234392
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-24 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 222.13162354227939
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-25 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 227.3914236301313
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-19 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 15.931428383296728
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-20 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 16.785546211109676
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-21 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 16.785546211109676
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-22 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 16.785546211109676
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-23 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 16.785546211109676
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-24 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 16.785546211109676
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-25 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 16.785546211109676
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-19 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 165.18367346938774
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-20 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 165.18367346938774
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-21 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 165.18367346938774
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-22 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 165.18367346938774
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-23 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 165.18367346938774
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-24 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 165.18367346938774
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-25 00:00:00",
+      "model": "AutoARIMA",
+      "yhat": 165.18367346938774
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-19 00:00:00",
+      "model": "AutoETS",
+      "yhat": 214.8767059152168
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-20 00:00:00",
+      "model": "AutoETS",
+      "yhat": 216.87949443276665
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-21 00:00:00",
+      "model": "AutoETS",
+      "yhat": 218.8822829503165
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-22 00:00:00",
+      "model": "AutoETS",
+      "yhat": 220.8850714678663
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-23 00:00:00",
+      "model": "AutoETS",
+      "yhat": 222.88785998541613
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-24 00:00:00",
+      "model": "AutoETS",
+      "yhat": 224.89064850296597
+    },
+    {
+      "unique_id": "combined",
+      "ds": "2026-02-25 00:00:00",
+      "model": "AutoETS",
+      "yhat": 226.89343702051582
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-19 00:00:00",
+      "model": "AutoETS",
+      "yhat": 16.79338900110746
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-20 00:00:00",
+      "model": "AutoETS",
+      "yhat": 16.79338900110746
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-21 00:00:00",
+      "model": "AutoETS",
+      "yhat": 16.79338900110746
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-22 00:00:00",
+      "model": "AutoETS",
+      "yhat": 16.79338900110746
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-23 00:00:00",
+      "model": "AutoETS",
+      "yhat": 16.79338900110746
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-24 00:00:00",
+      "model": "AutoETS",
+      "yhat": 16.79338900110746
+    },
+    {
+      "unique_id": "seasonal",
+      "ds": "2026-02-25 00:00:00",
+      "model": "AutoETS",
+      "yhat": 16.79338900110746
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-19 00:00:00",
+      "model": "AutoETS",
+      "yhat": 195.999799979998
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-20 00:00:00",
+      "model": "AutoETS",
+      "yhat": 195.999799979998
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-21 00:00:00",
+      "model": "AutoETS",
+      "yhat": 195.999799979998
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-22 00:00:00",
+      "model": "AutoETS",
+      "yhat": 195.999799979998
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-23 00:00:00",
+      "model": "AutoETS",
+      "yhat": 195.999799979998
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-24 00:00:00",
+      "model": "AutoETS",
+      "yhat": 195.999799979998
+    },
+    {
+      "unique_id": "trend",
+      "ds": "2026-02-25 00:00:00",
+      "model": "AutoETS",
+      "yhat": 195.999799979998
+    }
+  ],
+  "backtest": [
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoARIMA",
+      "smape": 2.5841,
+      "horizon": 7,
+      "holdout_start": "2026-01-29 00:00:00",
+      "holdout_end": "2026-02-04 00:00:00"
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoETS",
+      "smape": 2.32,
+      "horizon": 7,
+      "holdout_start": "2026-01-29 00:00:00",
+      "holdout_end": "2026-02-04 00:00:00"
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoARIMA",
+      "smape": 25.0143,
+      "horizon": 7,
+      "holdout_start": "2026-01-29 00:00:00",
+      "holdout_end": "2026-02-04 00:00:00"
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoETS",
+      "smape": 25.4727,
+      "horizon": 7,
+      "holdout_start": "2026-01-29 00:00:00",
+      "holdout_end": "2026-02-04 00:00:00"
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoARIMA",
+      "smape": 20.7747,
+      "horizon": 7,
+      "holdout_start": "2026-01-29 00:00:00",
+      "holdout_end": "2026-02-04 00:00:00"
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoETS",
+      "smape": 20.7747,
+      "horizon": 7,
+      "holdout_start": "2026-01-29 00:00:00",
+      "holdout_end": "2026-02-04 00:00:00"
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoARIMA",
+      "smape": 2.4032,
+      "horizon": 7,
+      "holdout_start": "2026-02-05 00:00:00",
+      "holdout_end": "2026-02-11 00:00:00"
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoETS",
+      "smape": 2.2278,
+      "horizon": 7,
+      "holdout_start": "2026-02-05 00:00:00",
+      "holdout_end": "2026-02-11 00:00:00"
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoARIMA",
+      "smape": 25.8846,
+      "horizon": 7,
+      "holdout_start": "2026-02-05 00:00:00",
+      "holdout_end": "2026-02-11 00:00:00"
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoETS",
+      "smape": 26.5861,
+      "horizon": 7,
+      "holdout_start": "2026-02-05 00:00:00",
+      "holdout_end": "2026-02-11 00:00:00"
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoARIMA",
+      "smape": 10.7152,
+      "horizon": 7,
+      "holdout_start": "2026-02-05 00:00:00",
+      "holdout_end": "2026-02-11 00:00:00"
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoETS",
+      "smape": 52.1066,
+      "horizon": 7,
+      "holdout_start": "2026-02-05 00:00:00",
+      "holdout_end": "2026-02-11 00:00:00"
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoARIMA",
+      "smape": 2.1168,
+      "horizon": 7,
+      "holdout_start": "2026-02-12 00:00:00",
+      "holdout_end": "2026-02-18 00:00:00"
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoETS",
+      "smape": 2.0075,
+      "horizon": 7,
+      "holdout_start": "2026-02-12 00:00:00",
+      "holdout_end": "2026-02-18 00:00:00"
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoARIMA",
+      "smape": 25.0527,
+      "horizon": 7,
+      "holdout_start": "2026-02-12 00:00:00",
+      "holdout_end": "2026-02-18 00:00:00"
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoETS",
+      "smape": 25.4827,
+      "horizon": 7,
+      "holdout_start": "2026-02-12 00:00:00",
+      "holdout_end": "2026-02-18 00:00:00"
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoARIMA",
+      "smape": 16.471,
+      "horizon": 7,
+      "holdout_start": "2026-02-12 00:00:00",
+      "holdout_end": "2026-02-18 00:00:00"
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoETS",
+      "smape": 1.9298,
+      "horizon": 7,
+      "holdout_start": "2026-02-12 00:00:00",
+      "holdout_end": "2026-02-18 00:00:00"
+    }
+  ],
+  "backtest_points": [
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-29 00:00:00",
+      "y": 169.0,
+      "yhat": 171.89133033785149
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-30 00:00:00",
+      "y": 176.0,
+      "yhat": 168.39236009203668
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-31 00:00:00",
+      "y": 185.0,
+      "yhat": 176.23418402735228
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-01 00:00:00",
+      "y": 179.0,
+      "yhat": 180.75412512365918
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-02 00:00:00",
+      "y": 173.0,
+      "yhat": 177.41099044045424
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-03 00:00:00",
+      "y": 180.0,
+      "yhat": 178.59489867194253
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-04 00:00:00",
+      "y": 190.0,
+      "yhat": 184.670940779611
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-29 00:00:00",
+      "y": 169.0,
+      "yhat": 172.8577040241585
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-30 00:00:00",
+      "y": 176.0,
+      "yhat": 174.86243510222056
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-31 00:00:00",
+      "y": 185.0,
+      "yhat": 176.86716618028262
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-01 00:00:00",
+      "y": 179.0,
+      "yhat": 178.8718972583447
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-02 00:00:00",
+      "y": 173.0,
+      "yhat": 180.87662833640675
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-03 00:00:00",
+      "y": 180.0,
+      "yhat": 182.88135941446882
+    },
+    {
+      "unique_id": "combined",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-04 00:00:00",
+      "y": 190.0,
+      "yhat": 184.88609049253088
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-29 00:00:00",
+      "y": 13.0,
+      "yhat": 16.21428558730969
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-30 00:00:00",
+      "y": 18.0,
+      "yhat": 16.772906395475818
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-31 00:00:00",
+      "y": 25.0,
+      "yhat": 16.772906395475818
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-01 00:00:00",
+      "y": 17.0,
+      "yhat": 16.772906395475818
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-02 00:00:00",
+      "y": 9.0,
+      "yhat": 16.772906395475818
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-03 00:00:00",
+      "y": 14.0,
+      "yhat": 16.772906395475818
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-04 00:00:00",
+      "y": 22.0,
+      "yhat": 16.772906395475818
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-29 00:00:00",
+      "y": 13.0,
+      "yhat": 16.79367131639639
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-30 00:00:00",
+      "y": 18.0,
+      "yhat": 16.79367131639639
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-31 00:00:00",
+      "y": 25.0,
+      "yhat": 16.79367131639639
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-01 00:00:00",
+      "y": 17.0,
+      "yhat": 16.79367131639639
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-02 00:00:00",
+      "y": 9.0,
+      "yhat": 16.79367131639639
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-03 00:00:00",
+      "y": 14.0,
+      "yhat": 16.79367131639639
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-04 00:00:00",
+      "y": 22.0,
+      "yhat": 16.79367131639639
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-29 00:00:00",
+      "y": 156.0,
+      "yhat": 156.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-30 00:00:00",
+      "y": 1000.0,
+      "yhat": 158.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-01-31 00:00:00",
+      "y": 160.0,
+      "yhat": 160.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-01 00:00:00",
+      "y": 162.0,
+      "yhat": 162.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-02 00:00:00",
+      "y": 164.0,
+      "yhat": 164.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-03 00:00:00",
+      "y": 166.0,
+      "yhat": 166.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoARIMA",
+      "ds": "2026-02-04 00:00:00",
+      "y": 168.0,
+      "yhat": 168.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-29 00:00:00",
+      "y": 156.0,
+      "yhat": 156.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-30 00:00:00",
+      "y": 1000.0,
+      "yhat": 158.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-01-31 00:00:00",
+      "y": 160.0,
+      "yhat": 160.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-01 00:00:00",
+      "y": 162.0,
+      "yhat": 162.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-02 00:00:00",
+      "y": 164.0,
+      "yhat": 164.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-03 00:00:00",
+      "y": 166.0,
+      "yhat": 166.0
+    },
+    {
+      "unique_id": "trend",
+      "window": 1,
+      "model": "AutoETS",
+      "ds": "2026-02-04 00:00:00",
+      "y": 168.0,
+      "yhat": 168.0
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-05 00:00:00",
+      "y": 182.0,
+      "yhat": 186.44955427933024
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-06 00:00:00",
+      "y": 190.0,
+      "yhat": 183.21762111316917
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-07 00:00:00",
+      "y": 199.0,
+      "yhat": 190.56642507685805
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-08 00:00:00",
+      "y": 193.0,
+      "yhat": 194.9382451829179
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-09 00:00:00",
+      "y": 187.0,
+      "yhat": 192.17413633743757
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-10 00:00:00",
+      "y": 194.0,
+      "yhat": 193.4818440628033
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-11 00:00:00",
+      "y": 204.0,
+      "yhat": 199.06790015335633
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-05 00:00:00",
+      "y": 182.0,
+      "yhat": 186.8894567257731
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-06 00:00:00",
+      "y": 190.0,
+      "yhat": 188.89418833139334
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-07 00:00:00",
+      "y": 199.0,
+      "yhat": 190.89891993701355
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-08 00:00:00",
+      "y": 193.0,
+      "yhat": 192.90365154263375
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-09 00:00:00",
+      "y": 187.0,
+      "yhat": 194.90838314825396
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-10 00:00:00",
+      "y": 194.0,
+      "yhat": 196.9131147538742
+    },
+    {
+      "unique_id": "combined",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-11 00:00:00",
+      "y": 204.0,
+      "yhat": 198.9178463594944
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-05 00:00:00",
+      "y": 12.0,
+      "yhat": 15.947618902779416
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-06 00:00:00",
+      "y": 18.0,
+      "yhat": 16.785456877627716
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-07 00:00:00",
+      "y": 25.0,
+      "yhat": 16.785456877627716
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-08 00:00:00",
+      "y": 17.0,
+      "yhat": 16.785456877627716
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-09 00:00:00",
+      "y": 9.0,
+      "yhat": 16.785456877627716
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-10 00:00:00",
+      "y": 14.0,
+      "yhat": 16.785456877627716
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-11 00:00:00",
+      "y": 22.0,
+      "yhat": 16.785456877627716
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-05 00:00:00",
+      "y": 12.0,
+      "yhat": 16.799337883021696
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-06 00:00:00",
+      "y": 18.0,
+      "yhat": 16.799337883021696
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-07 00:00:00",
+      "y": 25.0,
+      "yhat": 16.799337883021696
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-08 00:00:00",
+      "y": 17.0,
+      "yhat": 16.799337883021696
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-09 00:00:00",
+      "y": 9.0,
+      "yhat": 16.799337883021696
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-10 00:00:00",
+      "y": 14.0,
+      "yhat": 16.799337883021696
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-11 00:00:00",
+      "y": 22.0,
+      "yhat": 16.799337883021696
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-05 00:00:00",
+      "y": 170.0,
+      "yhat": 158.05714285714285
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-06 00:00:00",
+      "y": 172.0,
+      "yhat": 158.05714285714285
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-07 00:00:00",
+      "y": 174.0,
+      "yhat": 158.05714285714285
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-08 00:00:00",
+      "y": 176.0,
+      "yhat": 158.05714285714285
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-09 00:00:00",
+      "y": 178.0,
+      "yhat": 158.05714285714285
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-10 00:00:00",
+      "y": 180.0,
+      "yhat": 158.05714285714285
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoARIMA",
+      "ds": "2026-02-11 00:00:00",
+      "y": 182.0,
+      "yhat": 158.05714285714285
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-05 00:00:00",
+      "y": 170.0,
+      "yhat": 281.2357117097277
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-06 00:00:00",
+      "y": 172.0,
+      "yhat": 287.56481221947627
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-07 00:00:00",
+      "y": 174.0,
+      "yhat": 293.89391272922484
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-08 00:00:00",
+      "y": 176.0,
+      "yhat": 300.2230132389734
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-09 00:00:00",
+      "y": 178.0,
+      "yhat": 306.552113748722
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-10 00:00:00",
+      "y": 180.0,
+      "yhat": 312.88121425847055
+    },
+    {
+      "unique_id": "trend",
+      "window": 2,
+      "model": "AutoETS",
+      "ds": "2026-02-11 00:00:00",
+      "y": 182.0,
+      "yhat": 319.2103147682191
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-12 00:00:00",
+      "y": 197.0,
+      "yhat": 200.49543019404285
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-13 00:00:00",
+      "y": 204.0,
+      "yhat": 197.4486621727699
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-14 00:00:00",
+      "y": 213.0,
+      "yhat": 204.7455538473924
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-15 00:00:00",
+      "y": 207.0,
+      "yhat": 208.94022814366133
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-16 00:00:00",
+      "y": 201.0,
+      "yhat": 206.31636293898057
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-17 00:00:00",
+      "y": 208.0,
+      "yhat": 207.8079381383669
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-18 00:00:00",
+      "y": 218.0,
+      "yhat": 213.24108277269426
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-12 00:00:00",
+      "y": 197.0,
+      "yhat": 200.85031426284635
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-13 00:00:00",
+      "y": 204.0,
+      "yhat": 202.8529564092547
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-14 00:00:00",
+      "y": 213.0,
+      "yhat": 204.85559855566302
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-15 00:00:00",
+      "y": 207.0,
+      "yhat": 206.85824070207136
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-16 00:00:00",
+      "y": 201.0,
+      "yhat": 208.8608828484797
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-17 00:00:00",
+      "y": 208.0,
+      "yhat": 210.86352499488802
+    },
+    {
+      "unique_id": "combined",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-18 00:00:00",
+      "y": 218.0,
+      "yhat": 212.86616714129636
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-12 00:00:00",
+      "y": 13.0,
+      "yhat": 16.2724251832945
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-13 00:00:00",
+      "y": 18.0,
+      "yhat": 16.77982482334214
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-14 00:00:00",
+      "y": 25.0,
+      "yhat": 16.77982482334214
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-15 00:00:00",
+      "y": 17.0,
+      "yhat": 16.77982482334214
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-16 00:00:00",
+      "y": 9.0,
+      "yhat": 16.77982482334214
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-17 00:00:00",
+      "y": 14.0,
+      "yhat": 16.77982482334214
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-18 00:00:00",
+      "y": 22.0,
+      "yhat": 16.77982482334214
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-12 00:00:00",
+      "y": 13.0,
+      "yhat": 16.78250234674985
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-13 00:00:00",
+      "y": 18.0,
+      "yhat": 16.78250234674985
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-14 00:00:00",
+      "y": 25.0,
+      "yhat": 16.78250234674985
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-15 00:00:00",
+      "y": 17.0,
+      "yhat": 16.78250234674985
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-16 00:00:00",
+      "y": 9.0,
+      "yhat": 16.78250234674985
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-17 00:00:00",
+      "y": 14.0,
+      "yhat": 16.78250234674985
+    },
+    {
+      "unique_id": "seasonal",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-18 00:00:00",
+      "y": 22.0,
+      "yhat": 16.78250234674985
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-12 00:00:00",
+      "y": 184.0,
+      "yhat": 161.04761904761898
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-13 00:00:00",
+      "y": 186.0,
+      "yhat": 161.04761904761898
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-14 00:00:00",
+      "y": 188.0,
+      "yhat": 161.04761904761898
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-15 00:00:00",
+      "y": 190.0,
+      "yhat": 161.04761904761898
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-16 00:00:00",
+      "y": 192.0,
+      "yhat": 161.04761904761898
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-17 00:00:00",
+      "y": 194.0,
+      "yhat": 161.04761904761898
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoARIMA",
+      "ds": "2026-02-18 00:00:00",
+      "y": 196.0,
+      "yhat": 161.04761904761898
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-12 00:00:00",
+      "y": 184.0,
+      "yhat": 188.34470011722235
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-13 00:00:00",
+      "y": 186.0,
+      "yhat": 188.34470011722235
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-14 00:00:00",
+      "y": 188.0,
+      "yhat": 188.34470011722235
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-15 00:00:00",
+      "y": 190.0,
+      "yhat": 188.34470011722235
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-16 00:00:00",
+      "y": 192.0,
+      "yhat": 188.34470011722235
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-17 00:00:00",
+      "y": 194.0,
+      "yhat": 188.34470011722235
+    },
+    {
+      "unique_id": "trend",
+      "window": 3,
+      "model": "AutoETS",
+      "ds": "2026-02-18 00:00:00",
+      "y": 196.0,
+      "yhat": 188.34470011722235
+    }
+  ],
+  "meta": {
+    "slug": "20260223-144442-pst-my-forecast-run",
+    "created_at": "2026-02-23T22:45:24.433062+00:00",
+    "github": {
+      "repo": "bryanwhiting/weatherman",
+      "run_id": "22328045827",
+      "actor": "bryanwhiting",
+      "sha": "4717fce00ef8bd307cf5b9fd6f1676743ad6dac0",
+      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22328045827"
+    },
+    "history_points": 147,
+    "forecast_points": 42
+  }
+}
