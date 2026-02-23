@@ -62,13 +62,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     }
 
     const useM5 = Boolean(body.use_m5);
-    const nSeries = Number(payloadObj.n_series ?? 3);
     if (useM5) {
       payloadObj.series_names = ['demo_mode_m5'];
+      payloadObj.series_data = [];
     } else {
       const names = Array.isArray(payloadObj.series_names) ? payloadObj.series_names : [];
+      const values = Array.isArray(payloadObj.series_data) ? payloadObj.series_data : [];
       if (names.includes('demo_mode_m5')) {
         return new Response(JSON.stringify({ error: 'series_names cannot include "demo_mode_m5" outside demo mode' }), {
+          status: 400,
+          headers: JSON_HEADERS,
+        });
+      }
+      if (names.length !== values.length) {
+        return new Response(JSON.stringify({ error: 'len(series_names) must equal len(series_data)' }), {
           status: 400,
           headers: JSON_HEADERS,
         });
@@ -91,7 +98,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         inputs: {
           slug,
           use_m5: String(useM5),
-          m5_series_count: String(Number.isFinite(nSeries) ? nSeries : 3),
+          m5_series_count: "3",
           payload: JSON.stringify(payloadObj),
           backtest_windows: String(body.backtest_windows ?? 3),
         },

@@ -55,22 +55,22 @@ def _build_history(req: ForecastRequest) -> pd.DataFrame:
     start = datetime.fromisoformat(req.start_datetime)
     freq = FREQ_MAP[req.granularity]
 
-    if len(req.series) == 0:
+    if len(req.series_data) == 0:
         return pd.DataFrame(columns=["unique_id", "ds", "y"])
 
-    # Multi-series payload: series is list[list[number]]
-    if isinstance(req.series[0], list):
+    # Multi-series payload: series_data is list[list[number]]
+    if isinstance(req.series_data[0], list):
         rows = []
-        for idx, series_values in enumerate(req.series, start=1):
+        for idx, series_values in enumerate(req.series_data, start=1):
             ds = pd.date_range(start=start, periods=len(series_values), freq=freq)
             uid = req.series_names[idx - 1] if idx - 1 < len(req.series_names) else f"series_{idx}"
             rows.extend({"unique_id": uid, "ds": d, "y": float(y)} for d, y in zip(ds, series_values))
         return pd.DataFrame(rows)
 
     # Single-series payload
-    ds = pd.date_range(start=start, periods=len(req.series), freq=freq)
+    ds = pd.date_range(start=start, periods=len(req.series_data), freq=freq)
     uid = req.series_names[0] if req.series_names else "series_1"
-    return pd.DataFrame({"unique_id": uid, "ds": ds, "y": req.series})
+    return pd.DataFrame({"unique_id": uid, "ds": ds, "y": req.series_data})
 
 
 def _load_m5_history(req: ForecastRequest) -> pd.DataFrame:

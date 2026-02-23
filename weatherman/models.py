@@ -6,55 +6,66 @@ Granularity = Literal["15m", "30m", "1h", "4h", "1d", "1w"]
 
 
 class ForecastRequest(BaseModel):
+    run_name_root: str = Field("my-forecast-run", min_length=1)
     start_datetime: str = Field("2026-01-01T00:00:00", description="ISO datetime for first observation")
     granularity: Granularity = Field("1d", description="Frequency of series")
-    series: list[float] | list[list[float]] = Field(default_factory=list, description="Observed values")
-    horizon: int = Field(24, ge=1, le=1000)
-    model: Literal["nixtla", "autogluon", "auto"] = "auto"
     seasonal_period: int | None = Field(None, ge=2, le=366, description="Optional seasonal cycle length")
-    series_names: list[str] = Field(default_factory=lambda: ["series_1"])
-    series_name: str | None = None  # backward compatibility
+    backtest_windows: int = Field(3, ge=1, le=20)
+    horizon: int = Field(24, ge=1, le=1000)
 
+    series_names: list[str] = Field(default_factory=lambda: ["series_1"])
+    series_data: list[float] | list[list[float]] = Field(default_factory=list, description="Observed values")
+
+    # Backward compatibility with older payload keys.
+    series: list[float] | list[list[float]] | None = None
+    series_name: str | None = None
+
+    model: Literal["nixtla", "autogluon", "auto"] = "auto"
     use_m5: bool = False
     m5_series_count: int = Field(3, ge=1, le=20)
     compare_algorithms: bool = True
     backtest: bool = True
-    backtest_windows: int = Field(3, ge=1, le=20)
 
-    @field_validator("series")
+    @field_validator("series_data")
     @classmethod
     def no_nulls(cls, v):
         if not isinstance(v, list):
-            raise ValueError("series must be a list")
+            raise ValueError("series_data must be a list")
         for item in v:
             if item is None:
-                raise ValueError("series cannot contain nulls")
-            if isinstance(item, list):
-                if any(x is None for x in item):
-                    raise ValueError("series cannot contain nulls")
+                raise ValueError("series_data cannot contain nulls")
+            if isinstance(item, list) and any(x is None for x in item):
+                raise ValueError("series_data cannot contain nulls")
         return v
 
     @model_validator(mode="after")
     def validate_source(self) -> "ForecastRequest":
+        # normalize legacy keys
+        if (not self.series_data) and self.series is not None:
+            self.series_data = self.series
         if self.series_name and not self.series_names:
             self.series_names = [self.series_name]
 
         if self.use_m5:
             self.series_names = ["demo_mode_m5"]
+            return self
+
+        if any(name == "demo_mode_m5" for name in self.series_names):
+            raise ValueError('series_names cannot include "demo_mode_m5" outside demo mode')
+
+        if len(self.series_data) == 0:
+            raise ValueError("series_data must contain values when use_m5=false")
+
+        if isinstance(self.series_data[0], list):
+            for idx, ser in enumerate(self.series_data, start=1):
+                if len(ser) < 10:
+                    raise ValueError(f"series_data[{idx}] must contain at least 10 points")
+            if len(self.series_names) != len(self.series_data):
+                raise ValueError("len(series_names) must equal len(series_data)")
         else:
-            if any(name == "demo_mode_m5" for name in self.series_names):
-                raise ValueError('series_names cannot include "demo_mode_m5" outside demo mode')
-            if len(self.series) == 0:
-                raise ValueError("series must contain values when use_m5=false")
-            if isinstance(self.series[0], list):
-                for idx, ser in enumerate(self.series, start=1):
-                    if len(ser) < 10:
-                        raise ValueError(f"series[{idx}] must contain at least 10 points")
-                if len(self.series_names) == 1:
-                    self.series_names = [f"{self.series_names[0]}_{i}" for i in range(1, len(self.series)+1)]
-            else:
-                if len(self.series) < 10:
-                    raise ValueError("series must contain at least 10 points when use_m5=false")
-                if len(self.series_names) == 0:
-                    self.series_names = ["series_1"]
+            if len(self.series_data) < 10:
+                raise ValueError("series_data must contain at least 10 points")
+            if len(self.series_names) != 1:
+                raise ValueError("single-series payload must provide exactly one series_name")
+
         return self

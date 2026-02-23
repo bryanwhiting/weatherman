@@ -8,15 +8,15 @@ ForecastingAPI.com is an open-source forecasting project with **two separate par
 ## Architecture
 
 ### 1) Python forecasting package (`forecastingapi/`)
-Input payload is compact:
+Input payload (recommended order):
 - `run_name_root`
 - `start_datetime`
 - `granularity`
+- `seasonal_period`
+- `backtest_windows`
 - `horizon`
 - `series_names` (list)
-- `series` (single list or list-of-lists)
-- `n_series`
-- `backtest_windows`
+- `series_data` (single list or list-of-lists)
 
 The engine builds continuous timestamps (no gaps), trains models, and forecasts after the last point.
 
@@ -83,9 +83,8 @@ In Cloudflare Pages project (`forecastingapi`) → Settings → Environment vari
 - `ALLOWED_REPO` (e.g. `bryanwhiting/forecastingapi`)
 
 ### 5) Enable workflows
-Workflows used:
-- `Forecast Request` (build artifacts + commit + deploy)
-- `Forecast Request` (builds + deploys to Cloudflare Pages)
+Workflow used:
+- `Forecast Request` (build artifacts, commit, and deploy to Cloudflare Pages)
 
 ### 6) Trigger a forecast
 Use app UI or run workflow dispatch with payload.

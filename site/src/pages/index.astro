@@ -18,20 +18,19 @@ const runs = forecastData
   .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
 
 const defaultPayload = JSON.stringify({
+  run_name_root: 'my-forecast-run',
   start_datetime: '2026-01-01T00:00:00',
   granularity: '1d',
+  seasonal_period: 7,
+  backtest_windows: 3,
   horizon: 7,
   model: 'nixtla',
-  seasonal_period: 7,
-  run_name_root: 'my-forecast-run',
-  n_series: 3,
-  backtest_windows: 3,
   series_names: ['trend', 'seasonal', 'combined'],
-  series: [
+  series_data: [
     [100, 103, 101, 106, 108, 107, 111, 114, 113, 117, 116, 120, 123, 121, 126, 128, 127, 131, 134, 132, 137, 139, 138, 142, 145, 143, 148, 150, 149, 153, 156, 154, 159, 161, 160, 164, 167, 165, 170, 172, 171, 175, 178, 176, 181, 183, 182, 186, 189],
     [13, 18, 25, 17, 9, 14, 22, 12, 18, 25, 17, 9, 14, 22, 13, 18, 25, 17, 9, 14, 22, 12, 18, 25, 17, 9, 14, 22, 13, 18, 25, 17, 9, 14, 22, 12, 18, 25, 17, 9, 14, 22, 13, 18, 25, 17, 9, 14, 22],
     [114, 119, 131, 121, 119, 123, 136, 124, 136, 142, 139, 130, 140, 149, 139, 150, 156, 153, 143, 154, 163, 152, 164, 170, 167, 158, 168, 177, 167, 178, 184, 181, 171, 182, 191, 180, 192, 198, 195, 186, 196, 205, 195, 206, 212, 209, 199, 210, 219]
-  ],
+  ]
 }, null, 2);
 ---
 <MainLayout title="ForecastingAPI.com">
@@ -102,10 +101,9 @@ const defaultPayload = JSON.stringify({
                   <tr><td class="p-2 border border-slate-700"><code>horizon</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Forecast periods after history</td><td class="p-2 border border-slate-700"><code>7</code></td></tr>
                   <tr><td class="p-2 border border-slate-700"><code>model</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Engine selector</td><td class="p-2 border border-slate-700"><code>nixtla</code></td></tr>
                   <tr><td class="p-2 border border-slate-700"><code>seasonal_period</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Season length for ARIMA/ETS</td><td class="p-2 border border-slate-700"><code>7</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>n_series</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Series count hint (M5 sampling)</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>backtest_windows</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Rolling holdout windows for SMAPE</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
+                                    <tr><td class="p-2 border border-slate-700"><code>backtest_windows</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Rolling holdout windows for SMAPE</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
                   <tr><td class="p-2 border border-slate-700"><code>series_names</code></td><td class="p-2 border border-slate-700">Custom</td><td class="p-2 border border-slate-700">Series IDs (<code>demo_mode_m5</code> reserved)</td><td class="p-2 border border-slate-700"><code>["trend","seasonal","combined"]</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>series</code></td><td class="p-2 border border-slate-700">Custom</td><td class="p-2 border border-slate-700">Single list or list-of-lists</td><td class="p-2 border border-slate-700"><code>[[...],[...],[...]]</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>series_data</code></td><td class="p-2 border border-slate-700">Custom</td><td class="p-2 border border-slate-700">Single list or list-of-lists. Must match <code>series_names</code> length.</td><td class="p-2 border border-slate-700"><code>[[...],[...],[...]]</code></td></tr>
                 </tbody>
               </table>
             </div>
@@ -222,7 +220,7 @@ const defaultPayload = JSON.stringify({
       testTab.classList.toggle('bg-slate-900', !useM5);
       if (useM5) {
         customPayloadCache = payloadInput.value;
-        payloadInput.value = JSON.stringify({ start_datetime: '2026-01-01T00:00:00', granularity: '1d', horizon: 24, model: 'nixtla', seasonal_period: 7, run_name_root: 'demo-m5-test', n_series: 3, backtest_windows: 3, series_names: ['demo_mode_m5'], series: [] }, null, 2);
+        payloadInput.value = JSON.stringify({ run_name_root: 'demo-m5-test', start_datetime: '2026-01-01T00:00:00', granularity: '1d', seasonal_period: 7, backtest_windows: 3, horizon: 24, model: 'nixtla', series_names: ['demo_mode_m5'], series_data: [] }, null, 2);
         payloadInput.readOnly = true;
         payloadInput.style.opacity = '0.65';
       } else {
@@ -251,6 +249,11 @@ const defaultPayload = JSON.stringify({
         const parsedPayload = JSON.parse(payloadRaw || '{}');
         const runNameRoot = String(parsedPayload?.run_name_root || '').trim();
         if (!runNameRoot) throw new Error('payload.run_name_root is required');
+        if (!use_m5) {
+          const names = Array.isArray(parsedPayload?.series_names) ? parsedPayload.series_names : [];
+          const values = Array.isArray(parsedPayload?.series_data) ? parsedPayload.series_data : [];
+          if (names.length !== values.length) throw new Error('len(series_names) must equal len(series_data)');
+        }
 
         const body = {
           repo: 'bryanwhiting/forecastingapi',
