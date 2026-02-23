@@ -71,7 +71,7 @@ git push origin main
 Project name used here: `weatherman`
 
 ### 3) Set GitHub repo secrets
-In `bryanwhiting/weatherman` → Settings → Secrets and variables → Actions:
+In `bryanwhiting/forecastingapi` → Settings → Secrets and variables → Actions:
 
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
@@ -80,7 +80,7 @@ In `bryanwhiting/weatherman` → Settings → Secrets and variables → Actions:
 In Cloudflare Pages project (`weatherman`) → Settings → Environment variables / secrets:
 
 - `GITHUB_TOKEN` (PAT with repo/workflow permissions)
-- `ALLOWED_REPO` (e.g. `bryanwhiting/weatherman`)
+- `ALLOWED_REPO` (e.g. `bryanwhiting/forecastingapi`)
 
 ### 5) Enable workflows
 Workflows used:
