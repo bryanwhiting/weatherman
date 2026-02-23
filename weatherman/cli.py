@@ -14,7 +14,7 @@ def _save_payload(path: Path, payload: dict) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Weatherman forecast runner")
+    parser = argparse.ArgumentParser(description="ForecastingAPI forecast runner")
     parser.add_argument("--input", required=True, help="Path to request JSON")
     parser.add_argument("--output", required=True, help="Path to output JSON")
     args = parser.parse_args()
