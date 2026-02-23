@@ -85,7 +85,7 @@ def main() -> None:
     index.append(
         {
             "slug": args.slug,
-            "title": ", ".join(result["request"].get("series_names", [])[:2]) or args.slug,
+            "title": args.slug,
             "created_at": run_at,
             "granularity": result["request"].get("granularity"),
             "horizon": result["request"].get("horizon"),

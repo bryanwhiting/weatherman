@@ -1,7 +1,7 @@
 [
   {
     "slug": "20260223-200414-my-forecast-run",
-    "title": "demo_hourly_1, demo_hourly_2",
+    "title": "20260223-200414-my-forecast-run",
     "created_at": "2026-02-23T20:05:02.451347+00:00",
     "granularity": "1h",
     "horizon": 24,
@@ -13,7 +13,7 @@
   },
   {
     "slug": "20260223-195202-my-forecast-run",
-    "title": "demo_hourly_1, demo_hourly_2",
+    "title": "20260223-195202-my-forecast-run",
     "created_at": "2026-02-23T19:53:14.164556+00:00",
     "granularity": "1h",
     "horizon": 24,
@@ -25,7 +25,7 @@
   },
   {
     "slug": "post-fix-check",
-    "title": "demo_mode_m5",
+    "title": "post-fix-check",
     "created_at": "2026-02-23T19:46:18.369494+00:00",
     "granularity": "1d",
     "horizon": 24,
@@ -37,7 +37,7 @@
   },
   {
     "slug": "20260223-193801-my-forecast-run",
-    "title": "demo_hourly",
+    "title": "20260223-193801-my-forecast-run",
     "created_at": "2026-02-23T19:38:51.917589+00:00",
     "granularity": "1h",
     "horizon": 24,
@@ -49,7 +49,7 @@
   },
   {
     "slug": "run-fix-test",
-    "title": "demo_hourly",
+    "title": "run-fix-test",
     "created_at": "2026-02-23T18:58:13.098327+00:00",
     "granularity": "1h",
     "horizon": 24,
