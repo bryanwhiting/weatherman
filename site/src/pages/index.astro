@@ -22,6 +22,15 @@ const leaderboard = Array.from(leaderboardMap.entries())
     samples: stats.count,
   }))
   .sort((a, b) => a.avgSmape - b.avgSmape);
+
+const defaultPayload = JSON.stringify({
+  start_datetime: '2026-01-01T17:15:00',
+  granularity: '1h',
+  series_name: 'demo_hourly',
+  horizon: 24,
+  model: 'nixtla',
+  series: [100, 102, 99, 101, 103, 104, 106, 108, 110, 111, 113, 116],
+}, null, 2);
 ---
 <html lang="en">
   <head>
@@ -46,12 +55,75 @@ const leaderboard = Array.from(leaderboardMap.entries())
       a { color: #8cc0ff; text-decoration: none; }
       a:hover { text-decoration: underline; }
       .empty { margin-top: 2rem; color: #9db0d4; }
+
+      .form-grid { display: grid; gap: .6rem; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+      label { font-size: .85rem; color: #b7c5e2; display: block; margin-bottom: .2rem; }
+      input, textarea, select { width: 100%; border: 1px solid #2c3a61; background: #0f1730; color: #eaf1ff; border-radius: 8px; padding: .55rem .65rem; font: inherit; }
+      textarea { min-height: 120px; }
+      button { border: 1px solid #3f568d; background: #1c2a4d; color: #eaf1ff; border-radius: 8px; padding: .6rem .8rem; cursor: pointer; }
+      button:hover { background: #243866; }
+      .muted { color: #98abd3; font-size: .85rem; }
+      .status { margin-top: .5rem; font-size: .9rem; }
+      @media (max-width: 720px) { .row { grid-template-columns: 1fr; } }
     </style>
   </head>
   <body>
     <main>
       <h1>Weatherman</h1>
       <p class="sub">Forecast requests submitted via GitHub Actions. Click any run for the full HTML report.</p>
+
+      <section class="card" style="margin-top:1rem;">
+        <h2>Submit Forecast Run</h2>
+        <p class="muted">This sends a <code>workflow_dispatch</code> POST to GitHub Actions for <code>forecast-request.yml</code>.</p>
+        <div class="form-grid">
+          <div class="row">
+            <div>
+              <label for="repo">Repo (owner/name)</label>
+              <input id="repo" value="bryanwhiting/weatherman" />
+            </div>
+            <div>
+              <label for="slug">Slug</label>
+              <input id="slug" placeholder="my-forecast-run" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="use_m5">Dataset</label>
+              <select id="use_m5">
+                <option value="false">Custom payload</option>
+                <option value="true">M5 sample</option>
+              </select>
+            </div>
+            <div>
+              <label for="m5_series_count">M5 series count</label>
+              <input id="m5_series_count" type="number" value="3" min="1" max="20" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="backtest_windows">Rolling backtest windows</label>
+              <input id="backtest_windows" type="number" value="3" min="1" max="20" />
+            </div>
+            <div>
+              <label for="token">GitHub token (workflow scope)</label>
+              <input id="token" type="password" placeholder="ghp_..." />
+            </div>
+          </div>
+
+          <div>
+            <label for="payload">Payload JSON</label>
+            <textarea id="payload">{defaultPayload}</textarea>
+          </div>
+
+          <div>
+            <button id="submit-btn">Submit run</button>
+            <span id="status" class="status"></span>
+          </div>
+        </div>
+      </section>
 
       {leaderboard.length > 0 && (
         <section class="leader-wrap card">
@@ -100,5 +172,68 @@ const leaderboard = Array.from(leaderboardMap.entries())
         </section>
       )}
     </main>
+
+    <script type="module">
+      const statusEl = document.getElementById('status');
+      const btn = document.getElementById('submit-btn');
+      const tokenInput = document.getElementById('token');
+
+      // convenience: remember token locally on this browser only
+      const saved = localStorage.getItem('weatherman_gh_token');
+      if (saved && tokenInput) tokenInput.value = saved;
+
+      btn?.addEventListener('click', async () => {
+        try {
+          statusEl.textContent = 'Submitting...';
+          btn.disabled = true;
+
+          const repo = document.getElementById('repo').value.trim();
+          const slug = document.getElementById('slug').value.trim();
+          const use_m5 = document.getElementById('use_m5').value;
+          const m5_series_count = document.getElementById('m5_series_count').value;
+          const backtest_windows = document.getElementById('backtest_windows').value;
+          const payloadRaw = document.getElementById('payload').value;
+          const token = tokenInput.value.trim();
+
+          if (!repo || !slug || !token) throw new Error('repo, slug, and token are required');
+          JSON.parse(payloadRaw); // validate
+
+          localStorage.setItem('weatherman_gh_token', token);
+
+          const url = `https://api.github.com/repos/${repo}/actions/workflows/forecast-request.yml/dispatches`;
+          const body = {
+            ref: 'main',
+            inputs: {
+              slug,
+              use_m5,
+              m5_series_count: String(m5_series_count),
+              payload: payloadRaw,
+              backtest_windows: String(backtest_windows),
+            },
+          };
+
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+          });
+
+          if (!res.ok) {
+            const txt = await res.text();
+            throw new Error(`GitHub API ${res.status}: ${txt}`);
+          }
+
+          statusEl.textContent = '✅ Dispatched. Check Actions tab for progress.';
+        } catch (err) {
+          statusEl.textContent = `❌ ${err.message}`;
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    </script>
   </body>
 </html>
