@@ -1,5 +1,17 @@
 [
   {
+    "slug": "20260223-200623-my-forecast-run",
+    "title": "demo_hourly_1, demo_hourly_2",
+    "created_at": "2026-02-23T20:07:28.704128+00:00",
+    "granularity": "1h",
+    "horizon": 24,
+    "history_points": 24,
+    "forecast_points": 96,
+    "backend": "nixtla",
+    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322798916",
+    "path": "/forecasts/20260223-200623-my-forecast-run"
+  },
+  {
     "slug": "20260223-200414-my-forecast-run",
     "title": "20260223-200414-my-forecast-run",
     "created_at": "2026-02-23T20:05:02.451347+00:00",
