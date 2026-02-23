@@ -22,6 +22,18 @@ FREQ_MAP = {
 MODEL_NAMES = ["AutoARIMA", "AutoETS"]
 
 
+def _default_season_length(granularity: str) -> int:
+    # Practical defaults. Daily data often has weekly seasonality.
+    return {
+        "15m": 96,
+        "30m": 48,
+        "1h": 24,
+        "4h": 6,
+        "1d": 7,
+        "1w": 52,
+    }.get(granularity, 7)
+
+
 @dataclass
 class ForecastResult:
     history: pd.DataFrame
@@ -82,8 +94,9 @@ def _forecast_nixtla_compare(
     freq: str,
     do_backtest: bool,
     backtest_windows: int,
+    season_length: int,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    models = [AutoARIMA(season_length=1), AutoETS(season_length=1)]
+    models = [AutoARIMA(season_length=season_length), AutoETS(season_length=season_length)]
 
     backtest_df = pd.DataFrame(columns=["unique_id", "window", "model", "smape", "horizon", "holdout_start", "holdout_end"])
     backtest_points_df = pd.DataFrame(columns=["unique_id", "window", "model", "ds", "y", "yhat"])
@@ -174,8 +187,15 @@ def forecast_from_request(req: ForecastRequest) -> ForecastResult:
         first_id = history["unique_id"].iloc[0]
         first_series = history[history["unique_id"] == first_id].sort_values("ds")["ds"]
         freq = pd.infer_freq(first_series.iloc[: min(10, len(first_series))]) or "D"
+        base_period = _default_season_length("1d")
     else:
         freq = FREQ_MAP[req.granularity]
+        base_period = _default_season_length(req.granularity)
+
+    # Cap season length so models always have enough points.
+    min_len = int(history.groupby("unique_id").size().min()) if len(history) else 2
+    season_length = req.seasonal_period or base_period
+    season_length = max(2, min(int(season_length), max(2, min_len - 1)))
 
     backend = req.model
     if backend == "auto":
@@ -192,6 +212,7 @@ def forecast_from_request(req: ForecastRequest) -> ForecastResult:
             freq,
             req.backtest,
             req.backtest_windows,
+            season_length,
         )
         backend = "nixtla"
 

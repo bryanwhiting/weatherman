@@ -24,6 +24,7 @@ const defaultPayload = JSON.stringify({
   granularity: '1d',
   horizon: 7,
   model: 'nixtla',
+  seasonal_period: 7,
   run_name_root: 'my-forecast-run',
   n_series: 3,
   backtest_windows: 3,
@@ -72,6 +73,7 @@ const defaultPayload = JSON.stringify({
                   <tr><td class="p-2 border border-slate-700"><code>granularity</code></td><td class="p-2 border border-slate-700">Custom mode</td><td class="p-2 border border-slate-700">Time spacing between points</td><td class="p-2 border border-slate-700"><code>1h</code>, <code>1d</code>, <code>15m</code></td></tr>
                   <tr><td class="p-2 border border-slate-700"><code>horizon</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Forecast periods to predict after history</td><td class="p-2 border border-slate-700"><code>24</code></td></tr>
                   <tr><td class="p-2 border border-slate-700"><code>model</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Forecast backend</td><td class="p-2 border border-slate-700"><code>nixtla</code>, <code>autogluon</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>seasonal_period</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Season length for AutoARIMA/AutoETS (use 7 for weekly daily data)</td><td class="p-2 border border-slate-700"><code>7</code></td></tr>
                   <tr><td class="p-2 border border-slate-700"><code>n_series</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Series count hint (used for M5 demo sampling)</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
                   <tr><td class="p-2 border border-slate-700"><code>backtest_windows</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Rolling holdout window count for SMAPE backtests</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
                   <tr><td class="p-2 border border-slate-700"><code>series_names</code></td><td class="p-2 border border-slate-700">Custom mode</td><td class="p-2 border border-slate-700">List of names for each series (<code>demo_mode_m5</code> reserved for demo)</td><td class="p-2 border border-slate-700"><code>["trend","seasonal","combined"]</code></td></tr>
@@ -195,7 +197,7 @@ const defaultPayload = JSON.stringify({
       testTab.classList.toggle('bg-slate-800', useM5); testTab.classList.toggle('bg-slate-900', !useM5);
       if (useM5) {
         customPayloadCache = payloadInput.value;
-        payloadInput.value = JSON.stringify({ start_datetime: '2026-01-01T00:00:00', granularity: '1d', horizon: 24, model: 'nixtla', run_name_root: 'demo-m5-test', n_series: 3, backtest_windows: 3, series_names: ['demo_mode_m5'], series: [] }, null, 2);
+        payloadInput.value = JSON.stringify({ start_datetime: '2026-01-01T00:00:00', granularity: '1d', horizon: 24, model: 'nixtla', seasonal_period: 7, run_name_root: 'demo-m5-test', n_series: 3, backtest_windows: 3, series_names: ['demo_mode_m5'], series: [] }, null, 2);
         payloadInput.readOnly = true;
         payloadInput.style.opacity = '0.65';
       } else {

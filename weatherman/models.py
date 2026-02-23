@@ -11,6 +11,7 @@ class ForecastRequest(BaseModel):
     series: list[float] | list[list[float]] = Field(default_factory=list, description="Observed values")
     horizon: int = Field(24, ge=1, le=1000)
     model: Literal["nixtla", "autogluon", "auto"] = "auto"
+    seasonal_period: int | None = Field(None, ge=2, le=366, description="Optional seasonal cycle length")
     series_names: list[str] = Field(default_factory=lambda: ["series_1"])
     series_name: str | None = None  # backward compatibility
 
