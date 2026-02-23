@@ -110,174 +110,151 @@ const backtestBySeries = seriesIds.map((sid) => {
     return { window: w, chart, scores };
   });
 
-  return { sid, windows, scoreRows };
+  return { sid, windows };
 });
 ---
 <MainLayout title={`Forecast ${runTitle}`}>
+  <style is:global>
+    html { scroll-behavior: smooth; }
+  </style>
+
   <Navbar />
-  <h1 class="text-2xl font-bold mt-4">Forecast: {runTitle}</h1>
-  <p class="text-slate-400 mt-1">Backend: {data.backend} · Granularity: {data.request.granularity} · Horizon: {data.request.horizon}</p>
-  {data?.meta?.github?.run_url && <p class="text-sm mt-1"><a href={data.meta.github.run_url} target="_blank" rel="noreferrer" class="text-sky-300">GitHub action run ↗</a></p>}
 
-  <section class="mt-4 space-y-4">
-    {seriesIds.map((sid) => {
-      const chart = getMainChart(sid);
-      const back = backtestBySeries.find((x) => x.sid === sid);
-      return (
-        <article class="rounded-xl border border-slate-700 bg-slate-900/70 p-4">
-          <h2 class="font-semibold mb-2">Series: {sid}</h2>
+  <div class="mt-4 grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)]">
+    <aside class="lg:sticky lg:top-6 h-max rounded-xl border border-slate-700 bg-slate-900/60 p-3">
+      <h2 class="text-xs uppercase tracking-wider text-slate-400">Navigate</h2>
+      <nav class="mt-2 space-y-1 text-sm">
+        <a href="#top" class="block rounded px-2 py-1 text-slate-300 hover:bg-slate-800">Overview</a>
+        {seriesIds.map((sid) => (
+          <a href={`#series-${sid}`} class="block rounded px-2 py-1 text-slate-300 hover:bg-slate-800">Series: {sid}</a>
+        ))}
+        <a href="#payload" class="block rounded px-2 py-1 text-slate-300 hover:bg-slate-800">Payload</a>
+      </nav>
+    </aside>
 
-          <h3 class="text-sm text-slate-300 mb-2">Main forecast</h3>
-          <div class="overflow-x-auto">
-            <svg viewBox={`0 0 ${chart.W} ${chart.H}`} class="min-w-[760px] w-full rounded bg-slate-950">
-              <rect x={chart.PAD.l} y={chart.PAD.t} width={chart.innerW} height={chart.innerH} fill="none" stroke="#1e293b" />
-              {Array.from({ length: 5 }).map((_, i) => {
-                const y = chart.PAD.t + (i / 4) * chart.innerH;
-                const val = (chart.yMax - ((i / 4) * (chart.yMax - chart.yMin))).toFixed(1);
-                return (
-                  <g>
-                    <line x1={chart.PAD.l} y1={y} x2={chart.W - chart.PAD.r} y2={y} stroke="#0f172a" />
-                    <text x="6" y={y + 4} font-size="11" fill="#94a3b8">{val}</text>
-                  </g>
-                );
-              })}
+    <section id="top" class="space-y-4">
+      <h1 class="text-2xl font-bold">Forecast: {runTitle}</h1>
+      <p class="text-slate-400">Backend: {data.backend} · Granularity: {data.request.granularity} · Horizon: {data.request.horizon}</p>
+      {data?.meta?.github?.run_url && <p class="text-sm"><a href={data.meta.github.run_url} target="_blank" rel="noreferrer" class="text-sky-300">GitHub action run ↗</a></p>}
 
-              {chart.actualPath && <path d={chart.actualPath} fill="none" stroke="#38bdf8" stroke-width="2" />}
-              {chart.actualValues.map((v, i) => {
-                const y = chart.yFor(v);
-                if (y === null) return null;
-                return <circle cx={chart.xFor(i)} cy={y} r="2.8" fill="#38bdf8" />;
-              })}
+      {seriesIds.map((sid) => {
+        const chart = getMainChart(sid);
+        const back = backtestBySeries.find((x) => x.sid === sid);
+        return (
+          <article id={`series-${sid}`} class="rounded-xl border border-slate-700 bg-slate-900/70 p-4 scroll-mt-8">
+            <h2 class="font-semibold mb-2">Series: {sid}</h2>
 
-              {chart.modelSeries.map((s, idx) => {
-                const d = (() => {
-                  let p = '';
-                  s.values.forEach((v, i) => {
-                    const y = chart.yFor(v);
-                    if (y === null) return;
-                    const x = chart.xFor(i);
-                    p += p ? ` L ${x} ${y}` : `M ${x} ${y}`;
-                  });
-                  return p;
-                })();
-
-                return (
-                  <>
-                    {d && <path d={d} fill="none" stroke={chart.colors[idx % chart.colors.length]} stroke-width="2" stroke-dasharray="6 4" />}
-                    {s.values.map((v, i) => {
-                      const y = chart.yFor(v);
-                      if (y === null) return null;
-                      return <circle cx={chart.xFor(i)} cy={y} r="2.5" fill={chart.colors[idx % chart.colors.length]} />;
-                    })}
-                  </>
-                );
-              })}
-            </svg>
-          </div>
-
-          <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-300">
-            <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-[2px] bg-sky-400"></span>Actual</span>
-            {chart.modelSeries.map((s, idx) => (
-              <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-[2px]" style={`background:${chart.colors[idx % chart.colors.length]}`}></span>Forecast ({s.model})</span>
-            ))}
-          </div>
-
-          <details class="mt-4 rounded-lg border border-slate-700 bg-slate-950/40 p-3">
-            <summary class="cursor-pointer font-semibold text-sm">Backfill testing + accuracies</summary>
-            {back && back.windows.length > 0 ? (
-              <div class="mt-3 space-y-4">
-                {back.windows.map((wObj) => {
-                  const firstScore = wObj.scores?.[0];
-                  const holdoutStart = firstScore ? String(firstScore.holdout_start) : 'n/a';
-                  const holdoutEnd = firstScore ? String(firstScore.holdout_end) : 'n/a';
+            <h3 class="text-sm text-slate-300 mb-2">Main forecast</h3>
+            <div class="overflow-x-auto">
+              <svg viewBox={`0 0 ${chart.W} ${chart.H}`} class="min-w-[760px] w-full rounded bg-slate-950">
+                <rect x={chart.PAD.l} y={chart.PAD.t} width={chart.innerW} height={chart.innerH} fill="none" stroke="#1e293b" />
+                {Array.from({ length: 5 }).map((_, i) => {
+                  const y = chart.PAD.t + (i / 4) * chart.innerH;
+                  const val = (chart.yMax - ((i / 4) * (chart.yMax - chart.yMin))).toFixed(1);
                   return (
-                  <details class="rounded border border-slate-700 p-3" open>
-                    <summary class="cursor-pointer text-xs text-slate-300 mb-2 font-semibold">Backtest window {wObj.window} · {holdoutStart} → {holdoutEnd}</summary>
-                    <div class="overflow-x-auto mt-2">
-                      <svg viewBox={`0 0 ${wObj.chart.W} ${wObj.chart.H}`} class="min-w-[720px] w-full rounded bg-slate-950">
-                        <rect x={wObj.chart.PAD.l} y={wObj.chart.PAD.t} width={wObj.chart.innerW} height={wObj.chart.innerH} fill="none" stroke="#1e293b" />
-
-                        {Array.from({ length: 5 }).map((_, i) => {
-                          const y = wObj.chart.PAD.t + (i / 4) * wObj.chart.innerH;
-                          const val = (wObj.chart.yMax - ((i / 4) * (wObj.chart.yMax - wObj.chart.yMin))).toFixed(1);
-                          return (
-                            <g>
-                              <line x1={wObj.chart.PAD.l} y1={y} x2={wObj.chart.W - wObj.chart.PAD.r} y2={y} stroke="#0f172a" />
-                              <text x="6" y={y + 4} font-size="11" fill="#94a3b8">{val}</text>
-                            </g>
-                          );
-                        })}
-
-                        {wObj.chart.actualPath && <path d={wObj.chart.actualPath} fill="none" stroke="#38bdf8" stroke-width="2" />}
-                        {wObj.chart.actualValues.map((v, i) => {
-                          const y = wObj.chart.yFor(v);
-                          if (y === null) return null;
-                          return <circle cx={wObj.chart.xFor(i)} cy={y} r="2.7" fill="#38bdf8" />;
-                        })}
-
-                        {wObj.chart.modelSeries.map((s, idx) => {
-                          const d = (() => {
-                            let p = '';
-                            s.values.forEach((v, i) => {
-                              const y = wObj.chart.yFor(v);
-                              if (y === null) return;
-                              const x = wObj.chart.xFor(i);
-                              p += p ? ` L ${x} ${y}` : `M ${x} ${y}`;
-                            });
-                            return p;
-                          })();
-
-                          return (
-                            <>
-                              {d && <path d={d} fill="none" stroke={wObj.chart.colors[idx % wObj.chart.colors.length]} stroke-width="2" stroke-dasharray="6 4" />}
-                              {s.values.map((v, i) => {
-                                const y = wObj.chart.yFor(v);
-                                if (y === null) return null;
-                                return <circle cx={wObj.chart.xFor(i)} cy={y} r="2.4" fill={wObj.chart.colors[idx % wObj.chart.colors.length]} />;
-                              })}
-                            </>
-                          );
-                        })}
-                      </svg>
-                    </div>
-
-                    <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-300">
-                      <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-[2px] bg-sky-400"></span>Actual</span>
-                      {wObj.chart.modelSeries.map((s, idx) => (
-                        <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-[2px]" style={`background:${wObj.chart.colors[idx % wObj.chart.colors.length]}`}></span>Predicted ({s.model})</span>
-                      ))}
-                    </div>
-
-                    <div class="mt-2 overflow-x-auto">
-                      <table class="min-w-[460px] text-xs w-full">
-                        <thead><tr class="text-slate-300"><th class="p-2 text-left">Model</th><th class="p-2 text-left">SMAPE</th><th class="p-2 text-left">Holdout Range</th></tr></thead>
-                        <tbody>
-                          {wObj.scores.map((row) => (
-                            <tr>
-                              <td class="p-2">{row.model}</td>
-                              <td class="p-2">{row.smape}</td>
-                              <td class="p-2">{String(row.holdout_start)} → {String(row.holdout_end)}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  </details>
+                    <g>
+                      <line x1={chart.PAD.l} y1={y} x2={chart.W - chart.PAD.r} y2={y} stroke="#0f172a" />
+                      <text x="6" y={y + 4} font-size="11" fill="#94a3b8">{val}</text>
+                    </g>
                   );
                 })}
-              </div>
-            ) : (
-              <p class="mt-2 text-sm text-slate-400">No backtest rows for this series yet (need more history or windows).</p>
-            )}
-          </details>
-        </article>
-      );
-    })}
-  </section>
 
-  <details class="mt-4 rounded-xl border border-slate-700 bg-slate-900/70 p-4">
-    <summary class="cursor-pointer font-semibold">Payload</summary>
-    <pre class="mt-2 overflow-auto rounded bg-slate-950 p-3 text-xs">{JSON.stringify(data.request, null, 2)}</pre>
-  </details>
+                {chart.actualPath && <path d={chart.actualPath} fill="none" stroke="#38bdf8" stroke-width="2" />}
+                {chart.actualValues.map((v, i) => {
+                  const y = chart.yFor(v);
+                  if (y === null) return null;
+                  return <circle cx={chart.xFor(i)} cy={y} r="2.8" fill="#38bdf8" />;
+                })}
+
+                {chart.modelSeries.map((s, idx) => {
+                  const d = (() => {
+                    let p = '';
+                    s.values.forEach((v, i) => {
+                      const y = chart.yFor(v);
+                      if (y === null) return;
+                      const x = chart.xFor(i);
+                      p += p ? ` L ${x} ${y}` : `M ${x} ${y}`;
+                    });
+                    return p;
+                  })();
+
+                  return (
+                    <>
+                      {d && <path d={d} fill="none" stroke={chart.colors[idx % chart.colors.length]} stroke-width="2" stroke-dasharray="6 4" />}
+                      {s.values.map((v, i) => {
+                        const y = chart.yFor(v);
+                        if (y === null) return null;
+                        return <circle cx={chart.xFor(i)} cy={y} r="2.5" fill={chart.colors[idx % chart.colors.length]} />;
+                      })}
+                    </>
+                  );
+                })}
+              </svg>
+            </div>
+
+            <details class="mt-4 rounded-lg border border-slate-700 bg-slate-950/40 p-3">
+              <summary class="cursor-pointer font-semibold text-sm">Backfill testing + accuracies</summary>
+              {back && back.windows.length > 0 ? (
+                <div class="mt-3 space-y-4">
+                  {back.windows.map((wObj) => {
+                    const firstScore = wObj.scores?.[0];
+                    const holdoutStart = firstScore ? String(firstScore.holdout_start) : 'n/a';
+                    const holdoutEnd = firstScore ? String(firstScore.holdout_end) : 'n/a';
+                    return (
+                      <details class="rounded border border-slate-700 p-3" open>
+                        <summary class="cursor-pointer text-xs text-slate-300 mb-2 font-semibold">Backtest window {wObj.window} · {holdoutStart} → {holdoutEnd}</summary>
+                        <div class="overflow-x-auto mt-2">
+                          <svg viewBox={`0 0 ${wObj.chart.W} ${wObj.chart.H}`} class="min-w-[720px] w-full rounded bg-slate-950">
+                            <rect x={wObj.chart.PAD.l} y={wObj.chart.PAD.t} width={wObj.chart.innerW} height={wObj.chart.innerH} fill="none" stroke="#1e293b" />
+
+                            {wObj.chart.actualPath && <path d={wObj.chart.actualPath} fill="none" stroke="#38bdf8" stroke-width="2" />}
+                            {wObj.chart.actualValues.map((v, i) => {
+                              const y = wObj.chart.yFor(v);
+                              if (y === null) return null;
+                              return <circle cx={wObj.chart.xFor(i)} cy={y} r="2.7" fill="#38bdf8" />;
+                            })}
+
+                            {wObj.chart.modelSeries.map((s, idx) => {
+                              const d = (() => {
+                                let p = '';
+                                s.values.forEach((v, i) => {
+                                  const y = wObj.chart.yFor(v);
+                                  if (y === null) return;
+                                  const x = wObj.chart.xFor(i);
+                                  p += p ? ` L ${x} ${y}` : `M ${x} ${y}`;
+                                });
+                                return p;
+                              })();
+
+                              return (
+                                <>
+                                  {d && <path d={d} fill="none" stroke={wObj.chart.colors[idx % wObj.chart.colors.length]} stroke-width="2" stroke-dasharray="6 4" />}
+                                  {s.values.map((v, i) => {
+                                    const y = wObj.chart.yFor(v);
+                                    if (y === null) return null;
+                                    return <circle cx={wObj.chart.xFor(i)} cy={y} r="2.4" fill={wObj.chart.colors[idx % wObj.chart.colors.length]} />;
+                                  })}
+                                </>
+                              );
+                            })}
+                          </svg>
+                        </div>
+                      </details>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p class="mt-2 text-sm text-slate-400">No backtest rows for this series yet (need more history or windows).</p>
+              )}
+            </details>
+          </article>
+        );
+      })}
+
+      <details id="payload" class="rounded-xl border border-slate-700 bg-slate-900/70 p-4 scroll-mt-8">
+        <summary class="cursor-pointer font-semibold">Payload</summary>
+        <pre class="mt-2 overflow-auto rounded bg-slate-950 p-3 text-xs">{JSON.stringify(data.request, null, 2)}</pre>
+      </details>
+    </section>
+  </div>
 </MainLayout>
