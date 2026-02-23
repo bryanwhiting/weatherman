@@ -2,53 +2,44 @@
 
 Weatherman is an open-source forecasting project with **two separate parts in one repo**:
 
-- `weatherman/` → Python forecasting library (Nixtla StatsForecast first)
-- `site/` → Astro website for landing page + per-run HTML reports
+- `weatherman/` → Python forecasting engine (Nixtla StatsForecast first)
+- `site/` → Astro + Tailwind web app (submit payloads, track jobs, view reports)
 
 ## Architecture
 
 ### 1) Python forecasting package (`weatherman/`)
-Input payload stays small:
-- `start_datetime` (first point timestamp)
-- `granularity` (`15m`, `1h`, `1d`, ...)
-- `series` (numeric values only)
+Input payload is compact:
+- `run_name_root`
+- `start_datetime`
+- `granularity`
 - `horizon`
+- `series_names` (list)
+- `series` (single list or list-of-lists)
+- `n_series`
+- `backtest_windows`
 
-The library builds a continuous datetime index (no gaps), maps values to generated dates, trains models, and forecasts future points.
+The engine builds continuous timestamps (no gaps), trains models, and forecasts after the last point.
 
-Initial backend: **Nixtla StatsForecast** (AutoARIMA + ETS), including **rolling backtests** with SMAPE.
+Current backend: **Nixtla StatsForecast** (AutoARIMA + AutoETS) with rolling backtesting + SMAPE.
 
 ### 2) Astro website (`site/`)
-- Landing page (`/`) lists all submitted forecast requests from `site/src/data/forecast-index.json`
-- Report page (`/forecasts/[slug]`) renders each run from `site/src/data/forecasts/<slug>.json`
-- Report shows actual vs forecast chart (Chart.js) + run metadata
+- Landing page (`/`) for payload submission + run status
+- Forecast pages (`/forecasts/[slug]`) generated from JSON artifacts
+- Per-series charts + backfill accuracy views
 
-## GitHub Actions submission flow
+---
 
-Run workflow: **Forecast Request** (`workflow_dispatch`) with:
-- `slug`
-- `payload` (JSON)
+## Environment setup
 
-The action:
-1. Runs Python forecast generation
-2. Writes `site/src/data/forecasts/<slug>.json`
-3. Updates `site/src/data/forecast-index.json`
-4. Commits and pushes
+Create local env file from template:
 
-Astro then builds static pages from those artifacts.
-
-## Example payload
-
-```json
-{
-  "start_datetime": "2026-01-01T17:15:00",
-  "granularity": "1h",
-  "series_name": "demo_hourly",
-  "horizon": 24,
-  "model": "nixtla",
-  "series": [100, 102, 99, 101, 103, 104, 106, 108, 110, 111]
-}
+```bash
+cp .env.example .env.local
 ```
+
+Fill values in `.env.local` (never commit real secrets).
+
+---
 
 ## Local usage
 
@@ -66,3 +57,43 @@ cd site
 npm install
 npm run build
 ```
+
+---
+
+## Deploy (GitHub + Cloudflare Pages)
+
+### 1) Push repo
+```bash
+git push origin main
+```
+
+### 2) Create Cloudflare Pages project
+Project name used here: `weatherman`
+
+### 3) Set GitHub repo secrets
+In `bryanwhiting/weatherman` → Settings → Secrets and variables → Actions:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+### 4) Set Cloudflare Pages Function secrets
+In Cloudflare Pages project (`weatherman`) → Settings → Environment variables / secrets:
+
+- `GITHUB_TOKEN` (PAT with repo/workflow permissions)
+- `ALLOWED_REPO` (e.g. `bryanwhiting/weatherman`)
+
+### 5) Enable workflows
+Workflows used:
+- `Forecast Request` (build artifacts + commit + deploy)
+- `Deploy Astro site to GitHub Pages` (optional if you keep GH Pages as mirror)
+
+### 6) Trigger a forecast
+Use app UI or run workflow dispatch with payload.
+
+---
+
+## Notes
+
+- `demo_mode_m5` is reserved for demo runs.
+- Backtests require enough history (`horizon * windows + train span`).
+- For concurrent runs, workflow uses retry + rebase push logic.
