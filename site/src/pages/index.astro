@@ -121,8 +121,8 @@ const defaultPayload = JSON.stringify({
               <input id="backtest_windows" type="number" value="3" min="1" max="20" />
             </div>
             <div>
-              <label for="token">GitHub token (workflow scope)</label>
-              <input id="token" type="password" placeholder="ghp_..." />
+              <label>Auth</label>
+              <input value="Server-managed (no token needed)" disabled />
             </div>
           </div>
 
@@ -189,11 +189,6 @@ const defaultPayload = JSON.stringify({
     <script type="module">
       const statusEl = document.getElementById('status');
       const btn = document.getElementById('submit-btn');
-      const tokenInput = document.getElementById('token');
-
-      // convenience: remember token locally on this browser only
-      const saved = localStorage.getItem('weatherman_gh_token');
-      if (saved && tokenInput) tokenInput.value = saved;
 
       btn?.addEventListener('click', async () => {
         try {
@@ -202,42 +197,32 @@ const defaultPayload = JSON.stringify({
 
           const repo = document.getElementById('repo').value.trim();
           const slug = document.getElementById('slug').value.trim();
-          const use_m5 = document.getElementById('use_m5').value;
+          const use_m5 = document.getElementById('use_m5').value === 'true';
           const m5_series_count = document.getElementById('m5_series_count').value;
           const backtest_windows = document.getElementById('backtest_windows').value;
           const payloadRaw = document.getElementById('payload').value;
-          const token = tokenInput.value.trim();
 
-          if (!repo || !slug || !token) throw new Error('repo, slug, and token are required');
+          if (!repo || !slug) throw new Error('repo and slug are required');
           JSON.parse(payloadRaw); // validate
 
-          localStorage.setItem('weatherman_gh_token', token);
-
-          const url = `https://api.github.com/repos/${repo}/actions/workflows/forecast-request.yml/dispatches`;
           const body = {
-            ref: 'main',
-            inputs: {
-              slug,
-              use_m5,
-              m5_series_count: String(m5_series_count),
-              payload: payloadRaw,
-              backtest_windows: String(backtest_windows),
-            },
+            repo,
+            slug,
+            use_m5,
+            m5_series_count: Number(m5_series_count),
+            payload: payloadRaw,
+            backtest_windows: Number(backtest_windows),
           };
 
-          const res = await fetch(url, {
+          const res = await fetch('/api/dispatch', {
             method: 'POST',
-            headers: {
-              'Accept': 'application/vnd.github+json',
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
           });
 
+          const json = await res.json().catch(() => ({}));
           if (!res.ok) {
-            const txt = await res.text();
-            throw new Error(`GitHub API ${res.status}: ${txt}`);
+            throw new Error(json?.error || `Request failed (${res.status})`);
           }
 
           statusEl.textContent = '✅ Dispatched. Check Actions tab for progress.';
