@@ -1,5 +1,27 @@
 ---
 import runs from '../data/forecast-index.json';
+
+const forecastModules = import.meta.glob('../data/forecasts/*.json', { eager: true });
+const allBacktests = Object.values(forecastModules)
+  .map((mod: any) => mod.default ?? mod)
+  .flatMap((data: any) => data.backtest ?? []);
+
+const leaderboardMap = new Map<string, { total: number; count: number }>();
+for (const row of allBacktests) {
+  const model = row.model;
+  const smape = Number(row.smape);
+  if (!model || Number.isNaN(smape)) continue;
+  const current = leaderboardMap.get(model) ?? { total: 0, count: 0 };
+  leaderboardMap.set(model, { total: current.total + smape, count: current.count + 1 });
+}
+
+const leaderboard = Array.from(leaderboardMap.entries())
+  .map(([model, stats]) => ({
+    model,
+    avgSmape: stats.total / stats.count,
+    samples: stats.count,
+  }))
+  .sort((a, b) => a.avgSmape - b.avgSmape);
 ---
 <html lang="en">
   <head>
@@ -10,11 +32,17 @@ import runs from '../data/forecast-index.json';
       body { font-family: Inter, system-ui, sans-serif; margin: 0; background: #0b1020; color: #e6edf7; }
       main { max-width: 980px; margin: 0 auto; padding: 2rem 1rem 4rem; }
       h1 { margin: 0; font-size: 2rem; }
+      h2 { margin: 0 0 .75rem; font-size: 1.1rem; }
       .sub { color: #a3b3d1; margin-top: .5rem; }
       .grid { margin-top: 1.5rem; display: grid; gap: .9rem; }
       .card { background: #141b31; border: 1px solid #273255; border-radius: 12px; padding: 1rem; }
-      .card h2 { margin: 0 0 .5rem; font-size: 1.1rem; }
       .meta { color: #9db0d4; font-size: .9rem; display: flex; gap: .75rem; flex-wrap: wrap; }
+      .leader-wrap { margin-top: 1.5rem; }
+      table { border-collapse: collapse; width: 100%; max-width: 520px; }
+      th, td { border: 1px solid #273255; padding: 8px 10px; text-align: left; }
+      th { background: #111935; color: #c7d7f8; }
+      td { color: #d9e4fa; }
+      .winner { color: #86efac; font-weight: 600; }
       a { color: #8cc0ff; text-decoration: none; }
       a:hover { text-decoration: underline; }
       .empty { margin-top: 2rem; color: #9db0d4; }
@@ -24,6 +52,32 @@ import runs from '../data/forecast-index.json';
     <main>
       <h1>Weatherman</h1>
       <p class="sub">Forecast requests submitted via GitHub Actions. Click any run for the full HTML report.</p>
+
+      {leaderboard.length > 0 && (
+        <section class="leader-wrap card">
+          <h2>Leaderboard (avg SMAPE across rolling backtests)</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Model</th>
+                <th>Avg SMAPE</th>
+                <th>Samples</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leaderboard.map((row, idx) => (
+                <tr>
+                  <td>{idx + 1}</td>
+                  <td class={idx === 0 ? 'winner' : ''}>{row.model}</td>
+                  <td>{row.avgSmape.toFixed(4)}</td>
+                  <td>{row.samples}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
 
       {runs.length === 0 ? (
         <p class="empty">No forecast runs yet.</p>
