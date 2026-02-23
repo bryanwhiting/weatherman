@@ -226,13 +226,23 @@ const version = `v0.${ymdhms}-${gitHash}`;
       const testTab = document.getElementById('tab-test');
       const useM5Input = document.getElementById('use_m5');
       const payloadInput = document.getElementById('payload');
+      let customPayloadCache = payloadInput.value;
 
       const setMode = (useM5) => {
         useM5Input.value = String(useM5);
         payloadTab.classList.toggle('active', !useM5);
         testTab.classList.toggle('active', useM5);
-        payloadInput.disabled = useM5;
-        payloadInput.style.opacity = useM5 ? '0.55' : '1';
+
+        if (useM5) {
+          customPayloadCache = payloadInput.value;
+          payloadInput.value = JSON.stringify({ demo_mode_m5: true }, null, 2);
+          payloadInput.readOnly = true;
+          payloadInput.style.opacity = '0.55';
+        } else {
+          payloadInput.readOnly = false;
+          payloadInput.style.opacity = '1';
+          if (customPayloadCache && customPayloadCache.trim()) payloadInput.value = customPayloadCache;
+        }
       };
 
       payloadTab?.addEventListener('click', () => setMode(false));
@@ -257,7 +267,7 @@ const version = `v0.${ymdhms}-${gitHash}`;
             run_name: runName,
             use_m5,
             m5_series_count: Number(m5_series_count),
-            payload: use_m5 ? '{}' : payloadRaw,
+            payload: payloadRaw,
             backtest_windows: Number(backtest_windows),
           };
 
