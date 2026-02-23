@@ -6,7 +6,7 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 from statsforecast import StatsForecast
-from statsforecast.models import AutoARIMA, ETS
+from statsforecast.models import AutoARIMA, AutoETS
 
 from .models import ForecastRequest
 
@@ -19,7 +19,7 @@ FREQ_MAP = {
     "1w": "W",
 }
 
-MODEL_NAMES = ["AutoARIMA", "ETS"]
+MODEL_NAMES = ["AutoARIMA", "AutoETS"]
 
 
 @dataclass
@@ -67,7 +67,7 @@ def _forecast_nixtla_compare(
     do_backtest: bool,
     backtest_windows: int,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    models = [AutoARIMA(season_length=1), ETS(season_length=1)]
+    models = [AutoARIMA(season_length=1), AutoETS(season_length=1)]
 
     backtest_df = pd.DataFrame(columns=["window", "model", "smape", "horizon", "holdout_start", "holdout_end"])
     if do_backtest:
