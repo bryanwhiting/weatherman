@@ -1,0 +1,45 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+<MainLayout title="M5 Benchmark">
+  <Navbar />
+  <article class="mt-4 rounded-xl border border-slate-700 bg-slate-900/70 p-5 space-y-4">
+    <h1 class="text-2xl font-bold">M5: Why it matters for time-series forecasting</h1>
+    <p class="text-slate-300">
+      The <strong>M5 Forecasting Competition</strong> is one of the most-used modern benchmarks for practical demand forecasting.
+      It uses real Walmart retail sales data with rich hierarchy (item, department, store, state) and calendar/event effects.
+    </p>
+
+    <section>
+      <h2 class="text-lg font-semibold mb-2">Why M5 is a strong standard</h2>
+      <ul class="list-disc ml-5 space-y-1 text-slate-300">
+        <li><strong>Real-world complexity:</strong> noisy retail demand, intermittent series, promotions, and seasonality.</li>
+        <li><strong>Hierarchical structure:</strong> forecasts must make sense across aggregation levels, not just one series.</li>
+        <li><strong>Scale:</strong> thousands of related series test both model quality and operational reliability.</li>
+        <li><strong>Community adoption:</strong> many papers and libraries report M5-style performance, so comparisons are meaningful.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-lg font-semibold mb-2">What Weatherman does with M5</h2>
+      <ul class="list-disc ml-5 space-y-1 text-slate-300">
+        <li>Lets you run a quick <strong>M5 demo mode</strong> from the landing page.</li>
+        <li>Samples a configurable number of M5 series via <code>n_series</code>.</li>
+        <li>Runs rolling backtests and reports SMAPE so you can compare models on historical windows.</li>
+        <li>Then generates forward forecasts for each series.</li>
+      </ul>
+    </section>
+
+    <section class="rounded-lg border border-slate-700 bg-slate-950 p-3">
+      <h3 class="font-semibold mb-2">When to use M5 demo vs your own payload</h3>
+      <ul class="list-disc ml-5 space-y-1 text-slate-300">
+        <li><strong>M5 demo:</strong> great for sanity checks, regressions, and model-comparison smoke tests.</li>
+        <li><strong>Your payload:</strong> best for business-specific signal, seasonality, and decision support.</li>
+      </ul>
+    </section>
+
+    <p class="text-sm text-slate-400">Note: M5 is a benchmark, not your business. Treat it as a quality baseline, then validate on your own data.</p>
+    <p><a href="/" class="text-sky-300 underline">← Back to Forecast form</a></p>
+  </article>
+</MainLayout>

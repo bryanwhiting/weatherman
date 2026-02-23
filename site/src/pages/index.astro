@@ -38,14 +38,15 @@ const defaultPayload = JSON.stringify({
 ---
 <MainLayout title="Weatherman">
   <Navbar />
-  <p class="text-slate-400 mt-1">Forecast requests submitted via GitHub Actions. Click any run for full report.</p>
+  <p class="text-slate-400 mt-1">Welcome to weatherman! A free API to forecast your time series</p>
+  <p class="text-sm mt-1"><a href="/m5" class="text-sky-300 underline">What is M5 and why it matters?</a></p>
 
   <section class="mt-4 rounded-xl border border-slate-700 bg-slate-900/70 p-4">
-    <h2 class="text-xl font-semibold mb-2">Submit Forecast Run</h2>
+    <h2 class="text-xl font-semibold mb-2">Enter Payload, get Forecasts</h2>
 
     <div class="space-y-3">
       <div>
-        <label class="block text-sm text-slate-300 mb-1">Supply a payload, or run a test</label>
+        <label class="block text-sm text-slate-300 mb-1">Supply your own payload, or use our M5 demo</label>
         <div class="grid grid-cols-2 gap-2">
           <button type="button" class="tab active rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm font-medium" id="tab-payload">Supply payload</button>
           <button type="button" class="tab rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm font-medium" id="tab-test">Run M5 test</button>
@@ -54,7 +55,7 @@ const defaultPayload = JSON.stringify({
       </div>
 
       <div>
-        <label for="payload" class="block text-sm text-slate-300 mb-1">Payload JSON</label>
+        <label for="payload" class="block text-sm text-slate-300 mb-1">Paste JSON Payload below</label>
         <details class="rounded-lg border border-slate-700 bg-slate-900 p-2 mb-2">
           <summary class="cursor-pointer text-sm text-sky-300">Payload instructions</summary>
           <div class="mt-2 text-xs md:text-sm text-slate-200 space-y-2">
@@ -87,7 +88,7 @@ const defaultPayload = JSON.stringify({
       </div>
 
       <div>
-        <button id="submit-btn" class="rounded-lg bg-sky-700 hover:bg-sky-600 px-4 py-2 font-semibold">Submit run</button>
+        <button id="submit-btn" class="rounded-lg bg-sky-700 hover:bg-sky-600 px-4 py-2 font-semibold">Forecast It!</button>
         <div id="status" class="mt-2 text-sm text-slate-300"></div>
         <div id="status-list" class="mt-2 space-y-1 text-sm"></div>
       </div>
