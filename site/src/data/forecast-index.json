@@ -1,5 +1,17 @@
 [
   {
+    "slug": "20260223-201040-debug",
+    "title": "20260223-201040-debug",
+    "created_at": "2026-02-23T20:11:29.163974+00:00",
+    "granularity": "1h",
+    "horizon": 24,
+    "history_points": 12,
+    "forecast_points": 48,
+    "backend": "nixtla",
+    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322944203",
+    "path": "/forecasts/20260223-201040-debug"
+  },
+  {
     "slug": "20260223-200933-my-forecast-run",
     "title": "20260223-200933-my-forecast-run",
     "created_at": "2026-02-23T20:10:33.733925+00:00",
