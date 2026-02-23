@@ -57,9 +57,23 @@ const defaultPayload = JSON.stringify({
     </div>
   </section>
 
-  <section class="mt-5 relative">
-    <div class="hidden md:block absolute left-[16.66%] right-[16.66%] top-7 h-px bg-gradient-to-r from-sky-500/20 via-violet-400/60 to-emerald-400/20"></div>
-    <div class="grid gap-4 md:grid-cols-3">
+  <section class="mt-5 relative overflow-hidden rounded-2xl">
+    <div class="hidden md:block absolute inset-0 pointer-events-none -z-0">
+      <svg class="w-full h-full" viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="flowLine" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(56,189,248,0.28)" />
+            <stop offset="50%" stop-color="rgba(167,139,250,0.35)" />
+            <stop offset="100%" stop-color="rgba(16,185,129,0.28)" />
+          </linearGradient>
+        </defs>
+        <path d="M80 110 C 260 60, 340 160, 520 110 S 780 60, 960 110 S 1080 150, 1140 110" fill="none" stroke="url(#flowLine)" stroke-width="4" stroke-linecap="round" />
+        <circle cx="80" cy="110" r="6" fill="rgba(56,189,248,0.5)"/>
+        <circle cx="520" cy="110" r="6" fill="rgba(167,139,250,0.55)"/>
+        <circle cx="960" cy="110" r="6" fill="rgba(16,185,129,0.5)"/>
+      </svg>
+    </div>
+    <div class="relative z-10 grid gap-4 md:grid-cols-3">
       <article class="group rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_0_0_1px_rgba(56,189,248,0.06),0_14px_40px_rgba(2,6,23,0.45)] hover:border-sky-400/60 transition">
         <div class="flex items-center gap-3">
           <div class="h-8 w-8 rounded-full bg-sky-500/20 border border-sky-400/50 text-sky-300 text-sm font-bold grid place-items-center">1</div>
