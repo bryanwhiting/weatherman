@@ -1,0 +1,46 @@
+---
+const { data } = Astro.props;
+const history = data.history ?? [];
+const forecast = data.forecast ?? [];
+const points = [...history.map((r) => ({...r, type:'actual'})), ...forecast.map((r) => ({...r, type:'forecast'}))];
+---
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Forecast</title>
+    <style>
+      body { font-family: Inter, system-ui, sans-serif; padding: 24px; max-width: 960px; margin: auto; }
+      .meta { color: #666; margin-bottom: 16px; }
+      canvas { width: 100%; height: 420px; }
+      pre { background:#f7f7f7; padding: 12px; border-radius: 8px; overflow:auto; }
+    </style>
+  </head>
+  <body>
+    <h1>Forecast: {data.request.series_name}</h1>
+    <p class="meta">Backend: {data.backend} · Granularity: {data.request.granularity} · Horizon: {data.request.horizon}</p>
+    <canvas id="chart"></canvas>
+
+    <h2>Request</h2>
+    <pre>{JSON.stringify(data.request, null, 2)}</pre>
+
+    <script type="module" define:vars={{ points }}>
+      import Chart from 'chart.js/auto';
+      const labels = points.map((p) => new Date(p.ds).toLocaleString());
+      const actual = points.map((p) => p.type === 'actual' ? p.y : null);
+      const pred = points.map((p) => p.type === 'forecast' ? p.yhat : null);
+
+      new Chart(document.getElementById('chart'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            { label: 'Actual', data: actual, borderColor: '#1d4ed8', spanGaps: true },
+            { label: 'Forecast', data: pred, borderColor: '#dc2626', spanGaps: true }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    </script>
+  </body>
+</html>

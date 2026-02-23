@@ -1,0 +1,11 @@
+{
+  "start_datetime": "2026-01-01T17:15:00",
+  "granularity": "1h",
+  "series_name": "demo_hourly",
+  "horizon": 24,
+  "model": "nixtla",
+  "series": [
+    100, 102, 99, 101, 103, 104, 106, 108, 110, 111,
+    113, 116, 117, 119, 118, 120, 122, 124, 126, 128
+  ]
+}
