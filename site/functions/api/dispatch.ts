@@ -80,6 +80,17 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
           headers: JSON_HEADERS,
         });
       }
+      const isReal = (x: unknown) => typeof x === 'number' && Number.isFinite(x);
+      const bad = values.some((series: unknown) => {
+        if (Array.isArray(series)) return series.some((x) => !isReal(x));
+        return !isReal(series);
+      });
+      if (bad) {
+        return new Response(JSON.stringify({ error: 'series_data must contain only real numeric datapoints' }), {
+          status: 400,
+          headers: JSON_HEADERS,
+        });
+      }
     }
 
     const cleanName = sanitizeSlug(runNameRaw) || 'forecast';

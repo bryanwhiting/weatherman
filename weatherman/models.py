@@ -31,11 +31,22 @@ class ForecastRequest(BaseModel):
     def no_nulls(cls, v):
         if not isinstance(v, list):
             raise ValueError("series_data must be a list")
+
+        def is_real_number(x):
+            return isinstance(x, (int, float)) and not isinstance(x, bool)
+
         for item in v:
             if item is None:
                 raise ValueError("series_data cannot contain nulls")
-            if isinstance(item, list) and any(x is None for x in item):
-                raise ValueError("series_data cannot contain nulls")
+            if isinstance(item, list):
+                for x in item:
+                    if x is None:
+                        raise ValueError("series_data cannot contain nulls")
+                    if not is_real_number(x):
+                        raise ValueError("series_data must contain only real numeric datapoints")
+            else:
+                if not is_real_number(item):
+                    raise ValueError("series_data must contain only real numeric datapoints")
         return v
 
     @model_validator(mode="after")

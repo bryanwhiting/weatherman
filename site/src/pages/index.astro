@@ -360,6 +360,13 @@ const defaultPayload = JSON.stringify({
           const names = Array.isArray(parsedPayload?.series_names) ? parsedPayload.series_names : [];
           const values = Array.isArray(parsedPayload?.series_data) ? parsedPayload.series_data : [];
           if (names.length !== values.length) throw new Error('len(series_names) must equal len(series_data)');
+
+          const isReal = (x) => typeof x === 'number' && Number.isFinite(x);
+          const bad = values.some((series) => {
+            if (Array.isArray(series)) return series.some((x) => !isReal(x));
+            return !isReal(series);
+          });
+          if (bad) throw new Error('series_data must contain only real numeric datapoints');
         }
 
         const body = {
