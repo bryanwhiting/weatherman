@@ -1,11 +1,14 @@
 ---
 import MainLayout from './MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
 const { data } = Astro.props;
 const history = data.history ?? [];
 const forecast = data.forecast ?? [];
 const backtest = data.backtest ?? [];
 const models = [...new Set(forecast.map((r) => r.model))];
 const points = [...history.map((r) => ({ ...r, type: 'actual' })), ...forecast.map((r) => ({ ...r, type: 'forecast' }))];
+
+const runTitle = data?.meta?.slug || data.request?.run_name_root || (data.request?.series_names || []).join(', ') || 'series';
 
 const backtestLeaderboard = Object.values(
   backtest.reduce((acc, row) => {
@@ -19,8 +22,9 @@ const backtestLeaderboard = Object.values(
   .map((r) => ({ model: r.model, avgSmape: r.count ? r.total / r.count : 0, samples: r.count }))
   .sort((a, b) => a.avgSmape - b.avgSmape);
 ---
-<MainLayout title="Forecast Report">
-  <h1 class="text-2xl font-bold">Forecast: {(data.request.series_names || []).join(', ') || data.request.series_name || 'series'}</h1>
+<MainLayout title={`Forecast ${runTitle}`}>
+  <Navbar />
+  <h1 class="text-2xl font-bold mt-4">Forecast: {runTitle}</h1>
   <p class="text-slate-400 mt-1">Backend: {data.backend} · Granularity: {data.request.granularity} · Horizon: {data.request.horizon}</p>
   {data?.meta?.github?.run_url && <p class="text-sm mt-1"><a href={data.meta.github.run_url} target="_blank" rel="noreferrer" class="text-sky-300">GitHub action run ↗</a></p>}
 
@@ -66,8 +70,8 @@ const backtestLeaderboard = Object.values(
     <pre class="mt-2 overflow-auto rounded bg-slate-950 p-3 text-xs">{JSON.stringify(data.request, null, 2)}</pre>
   </details>
 
-  <script type="module" define:vars={{ points, models }}>
-    import Chart from 'https://cdn.jsdelivr.net/npm/chart.js@4.4.3/+esm';
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script is:inline define:vars={{ points, models }}>
     const parseDs = (v) => {
       const s = String(v ?? '');
       const normalized = s.includes('T') ? s : s.replace(' ', 'T');
@@ -98,6 +102,8 @@ const backtestLeaderboard = Object.values(
     });
 
     const el = document.getElementById('chart');
-    if (el) new Chart(el, { type: 'line', data: { labels: labelFmt, datasets }, options: { responsive: true, maintainAspectRatio: false } });
+    if (el && window.Chart) {
+      new window.Chart(el, { type: 'line', data: { labels: labelFmt, datasets }, options: { responsive: true, maintainAspectRatio: false } });
+    }
   </script>
 </MainLayout>
