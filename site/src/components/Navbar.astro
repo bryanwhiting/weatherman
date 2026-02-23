@@ -4,8 +4,14 @@ import { execSync } from 'node:child_process';
 const gitHash = (() => {
   try { return execSync('git rev-parse --short HEAD').toString().trim(); } catch { return 'nogit'; }
 })();
-const d = new Date();
-const version = `v0.${String(d.getUTCFullYear()).slice(-2)}${String(d.getUTCMonth()+1).padStart(2,'0')}${String(d.getUTCDate()).padStart(2,'0')}${String(d.getUTCHours()).padStart(2,'0')}${String(d.getUTCMinutes()).padStart(2,'0')}${String(d.getUTCSeconds()).padStart(2,'0')}-${gitHash}`;
+const pst = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+const y = String(pst.getFullYear());
+const mo = String(pst.getMonth() + 1).padStart(2, '0');
+const d = String(pst.getDate()).padStart(2, '0');
+const h = String(pst.getHours()).padStart(2, '0');
+const mi = String(pst.getMinutes()).padStart(2, '0');
+const s = String(pst.getSeconds()).padStart(2, '0');
+const version = `v0.${y}${mo}${d}-${h}${mi}${s}-pst-${gitHash}`;
 ---
 <nav class="flex flex-wrap items-center justify-between gap-3">
   <div class="flex items-center gap-2">

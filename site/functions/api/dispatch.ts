@@ -19,14 +19,14 @@ const sanitizeSlug = (input: string): string =>
     .slice(0, 80);
 
 const timestampPrefix = (): string => {
-  const d = new Date();
-  const yyyy = d.getUTCFullYear();
-  const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
-  const dd = String(d.getUTCDate()).padStart(2, '0');
-  const hh = String(d.getUTCHours()).padStart(2, '0');
-  const mi = String(d.getUTCMinutes()).padStart(2, '0');
-  const ss = String(d.getUTCSeconds()).padStart(2, '0');
-  return `${yyyy}${mm}${dd}-${hh}${mi}${ss}`;
+  const pst = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+  const yyyy = pst.getFullYear();
+  const mm = String(pst.getMonth() + 1).padStart(2, '0');
+  const dd = String(pst.getDate()).padStart(2, '0');
+  const hh = String(pst.getHours()).padStart(2, '0');
+  const mi = String(pst.getMinutes()).padStart(2, '0');
+  const ss = String(pst.getSeconds()).padStart(2, '0');
+  return `${yyyy}${mm}${dd}-${hh}${mi}${ss}-pst`;
 };
 
 export const onRequestOptions = async () => {
