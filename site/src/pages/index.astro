@@ -146,12 +146,29 @@ const version = `v0.${ymdhms}-${gitHash}`;
           <div>
             <label for="payload">Payload JSON</label>
             <details class="instructions">
-              <summary>Instructions</summary>
+              <summary>Payload instructions</summary>
               <div class="instructions-body">
-                Time series values are assumed to be <strong>continuous with no gaps</strong> from the provided start datetime.
-                The system auto-generates timestamps at the selected granularity (1h, 1d, etc.) for each point in order.
-                Example: if you send 100 values starting at Jan 1, it creates 100 sequential timestamps, then forecasts after the last one.
-                Also include <code>run_name_root</code> in payload (used to generate the run slug). <code>series_name: "demo_mode_m5"</code> is reserved for demo mode.
+                <p>⚠️ <strong>Time series are assumed to be continuous at your time granularity!</strong> If they're not, you need to backfill them.</p>
+                <ul>
+                  <li>Payload is JSON only.</li>
+                  <li>For custom runs, provide your values in <code>series</code>.</li>
+                  <li>For M5 test mode, the app sets <code>series_name</code> to <code>demo_mode_m5</code> automatically.</li>
+                </ul>
+                <table>
+                  <thead>
+                    <tr><th>Field</th><th>Required</th><th>Description</th><th>Example</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><code>run_name_root</code></td><td>Yes</td><td>Base name used for slug generation (timestamp is prepended automatically)</td><td><code>my-forecast-run</code></td></tr>
+                    <tr><td><code>start_datetime</code></td><td>Custom mode</td><td>First timestamp in ISO format</td><td><code>2026-01-01T17:15:00</code></td></tr>
+                    <tr><td><code>granularity</code></td><td>Custom mode</td><td>Series frequency</td><td><code>1h</code>, <code>1d</code></td></tr>
+                    <tr><td><code>series_name</code></td><td>Custom mode</td><td>Name of the series (<code>demo_mode_m5</code> is reserved)</td><td><code>demand_store_1</code></td></tr>
+                    <tr><td><code>horizon</code></td><td>No</td><td>Forecast periods ahead</td><td><code>24</code></td></tr>
+                    <tr><td><code>backtest_windows</code></td><td>No</td><td>Rolling backtest window count</td><td><code>3</code></td></tr>
+                    <tr><td><code>model</code></td><td>No</td><td>Forecast backend selector</td><td><code>nixtla</code></td></tr>
+                    <tr><td><code>series</code></td><td>Custom mode</td><td>Numeric values in order (no gaps implied)</td><td><code>[100,102,99,...]</code></td></tr>
+                  </tbody>
+                </table>
               </div>
             </details>
             <textarea id="payload">{defaultPayload}</textarea>
