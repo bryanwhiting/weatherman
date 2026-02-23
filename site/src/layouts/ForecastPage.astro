@@ -34,14 +34,16 @@ const points = [...history.map((r) => ({ ...r, type: 'actual' })), ...forecast.m
         <h2>Backtest (last {data.request.horizon} points holdout)</h2>
         <table>
           <thead>
-            <tr><th>Model</th><th>SMAPE</th><th>Horizon</th></tr>
+            <tr><th>Window</th><th>Model</th><th>SMAPE</th><th>Horizon</th><th>Holdout Range</th></tr>
           </thead>
           <tbody>
             {backtest.map((row) => (
               <tr>
+                <td>{row.window}</td>
                 <td>{row.model}</td>
                 <td>{row.smape}</td>
                 <td>{row.horizon}</td>
+                <td>{new Date(row.holdout_start).toLocaleString()} → {new Date(row.holdout_end).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>

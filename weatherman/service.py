@@ -60,23 +60,53 @@ def _load_m5_history(req: ForecastRequest) -> pd.DataFrame:
     return df[["unique_id", "ds", "y"]]
 
 
-def _forecast_nixtla_compare(df: pd.DataFrame, horizon: int, freq: str, do_backtest: bool) -> tuple[pd.DataFrame, pd.DataFrame]:
+def _forecast_nixtla_compare(
+    df: pd.DataFrame,
+    horizon: int,
+    freq: str,
+    do_backtest: bool,
+    backtest_windows: int,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     models = [AutoARIMA(season_length=1), ETS(season_length=1)]
 
-    backtest_df = pd.DataFrame(columns=["model", "smape", "horizon"])
+    backtest_df = pd.DataFrame(columns=["window", "model", "smape", "horizon", "holdout_start", "holdout_end"])
     if do_backtest:
-        train_df = df.groupby("unique_id", group_keys=False).apply(lambda g: g.iloc[:-horizon])
-        holdout_df = df.groupby("unique_id", group_keys=False).apply(lambda g: g.iloc[-horizon:])
-
-        sf_bt = StatsForecast(models=models, freq=freq, n_jobs=1)
-        bt_pred = sf_bt.forecast(df=train_df, h=horizon)
-        merged = holdout_df.merge(bt_pred, on=["unique_id", "ds"], how="inner")
+        min_len = int(df.groupby("unique_id").size().min())
+        max_possible_windows = max(0, (min_len // horizon) - 1)
+        windows = max(1, min(backtest_windows, max_possible_windows)) if max_possible_windows > 0 else 0
 
         scores = []
-        for model_name in MODEL_NAMES:
-            if model_name in merged.columns:
-                score = _smape(merged["y"].to_numpy(dtype=float), merged[model_name].to_numpy(dtype=float))
-                scores.append({"model": model_name, "smape": round(score, 4), "horizon": horizon})
+        for w in range(windows):
+            # Rolling holdout from older to newer windows
+            offset = horizon * (windows - w)
+
+            train_df = df.groupby("unique_id", group_keys=False).apply(lambda g: g.iloc[: len(g) - offset])
+            holdout_df = df.groupby("unique_id", group_keys=False).apply(
+                lambda g: g.iloc[len(g) - offset : len(g) - offset + horizon]
+            )
+
+            sf_bt = StatsForecast(models=models, freq=freq, n_jobs=1)
+            bt_pred = sf_bt.forecast(df=train_df, h=horizon)
+            merged = holdout_df.merge(bt_pred, on=["unique_id", "ds"], how="inner")
+            if merged.empty:
+                continue
+
+            holdout_start = str(merged["ds"].min())
+            holdout_end = str(merged["ds"].max())
+
+            for model_name in MODEL_NAMES:
+                if model_name in merged.columns:
+                    score = _smape(merged["y"].to_numpy(dtype=float), merged[model_name].to_numpy(dtype=float))
+                    scores.append(
+                        {
+                            "window": w + 1,
+                            "model": model_name,
+                            "smape": round(score, 4),
+                            "horizon": horizon,
+                            "holdout_start": holdout_start,
+                            "holdout_end": holdout_end,
+                        }
+                    )
         backtest_df = pd.DataFrame(scores)
 
     sf = StatsForecast(models=models, freq=freq, n_jobs=1)
@@ -123,7 +153,13 @@ def forecast_from_request(req: ForecastRequest) -> ForecastResult:
         forecast = _forecast_autogluon(history, req.horizon)
         backtest = pd.DataFrame(columns=["model", "smape", "horizon"])
     else:
-        forecast, backtest = _forecast_nixtla_compare(history, req.horizon, freq, req.backtest)
+        forecast, backtest = _forecast_nixtla_compare(
+            history,
+            req.horizon,
+            freq,
+            req.backtest,
+            req.backtest_windows,
+        )
         backend = "nixtla"
 
     return ForecastResult(history=history, forecast=forecast, backend=backend, backtest=backtest)

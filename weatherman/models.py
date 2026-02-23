@@ -17,6 +17,7 @@ class ForecastRequest(BaseModel):
     m5_series_count: int = Field(3, ge=1, le=20)
     compare_algorithms: bool = True
     backtest: bool = True
+    backtest_windows: int = Field(3, ge=1, le=20)
 
     @field_validator("series")
     @classmethod

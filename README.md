@@ -16,7 +16,7 @@ Input payload stays small:
 
 The library builds a continuous datetime index (no gaps), maps values to generated dates, trains models, and forecasts future points.
 
-Initial backend: **Nixtla StatsForecast** (AutoARIMA + ETS).
+Initial backend: **Nixtla StatsForecast** (AutoARIMA + ETS), including **rolling backtests** with SMAPE.
 
 ### 2) Astro website (`site/`)
 - Landing page (`/`) lists all submitted forecast requests from `site/src/data/forecast-index.json`

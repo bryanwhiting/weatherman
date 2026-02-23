@@ -28,6 +28,7 @@ def main() -> None:
     parser.add_argument("--sha", default="")
     parser.add_argument("--use-m5", action="store_true")
     parser.add_argument("--m5-series-count", type=int, default=3)
+    parser.add_argument("--backtest-windows", type=int, default=3)
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
@@ -42,6 +43,7 @@ def main() -> None:
         request_obj.setdefault("granularity", "1d")
     request_obj.setdefault("compare_algorithms", True)
     request_obj.setdefault("backtest", True)
+    request_obj.setdefault("backtest_windows", args.backtest_windows)
     request_path = tmp_dir / f"{args.slug}.request.json"
     output_path = root / "site" / "src" / "data" / "forecasts" / f"{args.slug}.json"
     index_path = root / "site" / "src" / "data" / "forecast-index.json"
