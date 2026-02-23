@@ -30,6 +30,7 @@ const defaultPayload = JSON.stringify({
   series_name: 'demo_hourly',
   horizon: 24,
   model: 'nixtla',
+  backtest_windows: 3,
   series: [100, 102, 99, 101, 103, 104, 106, 108, 110, 111, 113, 116],
 }, null, 2);
 
@@ -147,11 +148,6 @@ const version = `v0.${ymdhms}-${gitHash}`;
           </div>
 
           <div>
-            <label for="backtest_windows">Rolling backtest windows</label>
-            <input id="backtest_windows" type="number" value="3" min="1" max="20" />
-          </div>
-
-          <div>
             <label for="payload">Payload JSON</label>
             <details class="instructions">
               <summary>Instructions</summary>
@@ -256,11 +252,10 @@ const version = `v0.${ymdhms}-${gitHash}`;
           const runName = document.getElementById('run_name').value.trim();
           const use_m5 = document.getElementById('use_m5').value === 'true';
           const m5_series_count = document.getElementById('m5_series_count').value;
-          const backtest_windows = document.getElementById('backtest_windows').value;
           const payloadRaw = document.getElementById('payload').value;
 
           if (!runName) throw new Error('forecast run name is required');
-          if (!use_m5) JSON.parse(payloadRaw); // validate only when payload mode
+          const parsedPayload = JSON.parse(payloadRaw || '{}'); // validate + inspect
 
           const body = {
             repo: 'bryanwhiting/weatherman',
