@@ -20,7 +20,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
       return new Response(JSON.stringify({ error: 'slug is required' }), { status: 400, headers: JSON_HEADERS });
     }
 
-    const repo = env.ALLOWED_REPO || 'bryanwhiting/weatherman';
+    const repo = env.ALLOWED_REPO || 'bryanwhiting/forecastingapi';
     const gh = await fetch(`https://api.github.com/repos/${repo}/actions/runs?per_page=30`, {
       headers: {
         Accept: 'application/vnd.github+json',

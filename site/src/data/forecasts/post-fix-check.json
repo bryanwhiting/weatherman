@@ -20291,11 +20291,11 @@
     "slug": "post-fix-check",
     "created_at": "2026-02-23T19:46:18.369494+00:00",
     "github": {
-      "repo": "bryanwhiting/weatherman",
+      "repo": "bryanwhiting/forecastingapi",
       "run_id": "22322062041",
       "actor": "bryanwhiting",
       "sha": "f9ca2e8d4df83bf053a703214df0653f5e3e0c04",
-      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322062041"
+      "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22322062041"
     },
     "history_points": 3938,
     "forecast_points": 96

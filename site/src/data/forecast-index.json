@@ -8,7 +8,7 @@
     "history_points": 36,
     "forecast_points": 144,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22324371665",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22324371665",
     "path": "/forecasts/20260223-125244-pst-my-forecast-run"
   },
   {
@@ -20,7 +20,7 @@
     "history_points": 36,
     "forecast_points": 144,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22324311566",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22324311566",
     "path": "/forecasts/20260223-125102-pst-status-custom-1"
   },
   {
@@ -32,7 +32,7 @@
     "history_points": 36,
     "forecast_points": 144,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22324034905",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22324034905",
     "path": "/forecasts/20260223-124255-pst-my-forecast-run"
   },
   {
@@ -44,7 +44,7 @@
     "history_points": 36,
     "forecast_points": 144,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22323909998",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22323909998",
     "path": "/forecasts/20260223-123912-pst-my-forecast-run"
   },
   {
@@ -56,7 +56,7 @@
     "history_points": 12,
     "forecast_points": 24,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22323215789",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22323215789",
     "path": "/forecasts/20260223-201831-regression-custom"
   },
   {
@@ -68,7 +68,7 @@
     "history_points": 12,
     "forecast_points": 48,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322944203",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22322944203",
     "path": "/forecasts/20260223-201040-debug"
   },
   {
@@ -80,7 +80,7 @@
     "history_points": 24,
     "forecast_points": 96,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322906547",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22322906547",
     "path": "/forecasts/20260223-200933-my-forecast-run"
   },
   {
@@ -92,7 +92,7 @@
     "history_points": 24,
     "forecast_points": 96,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322798916",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22322798916",
     "path": "/forecasts/20260223-200623-my-forecast-run"
   },
   {
@@ -104,7 +104,7 @@
     "history_points": 24,
     "forecast_points": 96,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322728674",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22322728674",
     "path": "/forecasts/20260223-200414-my-forecast-run"
   },
   {
@@ -116,7 +116,7 @@
     "history_points": 24,
     "forecast_points": 96,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322308676",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22322308676",
     "path": "/forecasts/20260223-195202-my-forecast-run"
   },
   {
@@ -128,7 +128,7 @@
     "history_points": 3938,
     "forecast_points": 96,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322062041",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22322062041",
     "path": "/forecasts/post-fix-check"
   },
   {
@@ -140,7 +140,7 @@
     "history_points": 24,
     "forecast_points": 96,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22321821769",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22321821769",
     "path": "/forecasts/20260223-193801-my-forecast-run"
   },
   {
@@ -152,7 +152,7 @@
     "history_points": 12,
     "forecast_points": 48,
     "backend": "nixtla",
-    "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22320413455",
+    "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22320413455",
     "path": "/forecasts/run-fix-test"
   }
 ]

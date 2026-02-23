@@ -242,11 +242,11 @@
     "slug": "20260223-201831-regression-custom",
     "created_at": "2026-02-23T20:19:34.697474+00:00",
     "github": {
-      "repo": "bryanwhiting/weatherman",
+      "repo": "bryanwhiting/forecastingapi",
       "run_id": "22323215789",
       "actor": "bryanwhiting",
       "sha": "fb7ce5b4d89281426e5f9872d017f2780a1cade3",
-      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22323215789"
+      "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22323215789"
     },
     "history_points": 12,
     "forecast_points": 24

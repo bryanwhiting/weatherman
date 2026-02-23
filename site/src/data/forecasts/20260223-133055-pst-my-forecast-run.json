@@ -2341,11 +2341,11 @@
     "slug": "20260223-133055-pst-my-forecast-run",
     "created_at": "2026-02-23T21:31:48.429853+00:00",
     "github": {
-      "repo": "bryanwhiting/weatherman",
+      "repo": "bryanwhiting/forecastingapi",
       "run_id": "22325641907",
       "actor": "bryanwhiting",
       "sha": "0512008a5813847512a0a0c30363c52876d9468c",
-      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22325641907"
+      "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22325641907"
     },
     "history_points": 147,
     "forecast_points": 42

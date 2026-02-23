@@ -747,11 +747,11 @@
     "slug": "20260223-193801-my-forecast-run",
     "created_at": "2026-02-23T19:38:51.917589+00:00",
     "github": {
-      "repo": "bryanwhiting/weatherman",
+      "repo": "bryanwhiting/forecastingapi",
       "run_id": "22321821769",
       "actor": "bryanwhiting",
       "sha": "eb9db0dc2e856b33a3c5ba5ebf14c60757b2e696",
-      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22321821769"
+      "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22321821769"
     },
     "history_points": 24,
     "forecast_points": 96

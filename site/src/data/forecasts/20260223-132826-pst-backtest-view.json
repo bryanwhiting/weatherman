@@ -2341,11 +2341,11 @@
     "slug": "20260223-132826-pst-backtest-view",
     "created_at": "2026-02-23T21:29:18.398961+00:00",
     "github": {
-      "repo": "bryanwhiting/weatherman",
+      "repo": "bryanwhiting/forecastingapi",
       "run_id": "22325557050",
       "actor": "bryanwhiting",
       "sha": "ef41b442c00a806ab7e519ef12bf0b8ac15cbec5",
-      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22325557050"
+      "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22325557050"
     },
     "history_points": 147,
     "forecast_points": 42

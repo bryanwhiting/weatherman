@@ -163,7 +163,7 @@ const defaultPayload = JSON.stringify({
         const emoji = r.status === 'completed' ? (r.conclusion === 'success' ? '✅' : '❌') : '⏳';
         const statusText = r.status === 'completed' ? (r.conclusion || 'completed') : (r.status || 'queued');
         const forecastHref = `/forecasts/${r.slug}`;
-        const href = r.html_url || r.actions_url || 'https://github.com/bryanwhiting/weatherman/actions/workflows/forecast-request.yml';
+        const href = r.html_url || r.actions_url || 'https://github.com/bryanwhiting/forecastingapi/actions/workflows/forecast-request.yml';
         if (r.status === 'completed' && r.conclusion === 'success') {
           return `<div class="rounded border border-slate-700 bg-slate-900/50 p-2 text-xs text-slate-300">✅ <code>${r.slug}</code> — success · Your forecast is ready: <a href="${forecastHref}" class="text-emerald-300 underline">${forecastHref}</a>, or refresh this browser · <a href="${href}" target="_blank" rel="noreferrer" class="text-sky-300 underline">run</a></div>`;
         }
@@ -253,7 +253,7 @@ const defaultPayload = JSON.stringify({
         if (!runNameRoot) throw new Error('payload.run_name_root is required');
 
         const body = {
-          repo: 'bryanwhiting/weatherman',
+          repo: 'bryanwhiting/forecastingapi',
           run_name_root: runNameRoot,
           use_m5,
           payload: payloadRaw,
@@ -264,7 +264,7 @@ const defaultPayload = JSON.stringify({
         const json = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(json?.error || `Request failed (${res.status})`);
 
-        const link = json?.actions_url || 'https://github.com/bryanwhiting/weatherman/actions/workflows/forecast-request.yml';
+        const link = json?.actions_url || 'https://github.com/bryanwhiting/forecastingapi/actions/workflows/forecast-request.yml';
         const statusUrl = json?.status_url || `/api/run-status?slug=${encodeURIComponent(json?.slug || '')}`;
         const slug = json?.slug || 'run';
 

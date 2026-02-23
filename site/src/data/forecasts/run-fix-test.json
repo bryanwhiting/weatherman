@@ -383,11 +383,11 @@
     "slug": "run-fix-test",
     "created_at": "2026-02-23T18:58:13.098327+00:00",
     "github": {
-      "repo": "bryanwhiting/weatherman",
+      "repo": "bryanwhiting/forecastingapi",
       "run_id": "22320413455",
       "actor": "bryanwhiting",
       "sha": "295f9937d570022c7a764b597b76bf8645e85378",
-      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22320413455"
+      "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22320413455"
     },
     "history_points": 12,
     "forecast_points": 48

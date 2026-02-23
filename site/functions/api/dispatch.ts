@@ -43,8 +43,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     }
 
     const body = await request.json<any>();
-    const repo = String(body.repo || '').trim() || 'bryanwhiting/weatherman';
-    const allowedRepo = env.ALLOWED_REPO || 'bryanwhiting/weatherman';
+    const repo = String(body.repo || '').trim() || 'bryanwhiting/forecastingapi';
+    const allowedRepo = env.ALLOWED_REPO || 'bryanwhiting/forecastingapi';
     if (repo !== allowedRepo) {
       return new Response(JSON.stringify({ error: `Repo not allowed. Expected ${allowedRepo}` }), {
         status: 403,

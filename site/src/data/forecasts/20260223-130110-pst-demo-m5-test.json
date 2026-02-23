@@ -30424,11 +30424,11 @@
     "slug": "20260223-130110-pst-demo-m5-test",
     "created_at": "2026-02-23T21:02:33.565869+00:00",
     "github": {
-      "repo": "bryanwhiting/weatherman",
+      "repo": "bryanwhiting/forecastingapi",
       "run_id": "22324652958",
       "actor": "bryanwhiting",
       "sha": "b9feb353521d6545351c458223eea2eead9e84b0",
-      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22324652958"
+      "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22324652958"
     },
     "history_points": 5907,
     "forecast_points": 144

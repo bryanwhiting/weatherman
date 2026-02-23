@@ -386,11 +386,11 @@
     "slug": "20260223-201040-debug",
     "created_at": "2026-02-23T20:11:29.163974+00:00",
     "github": {
-      "repo": "bryanwhiting/weatherman",
+      "repo": "bryanwhiting/forecastingapi",
       "run_id": "22322944203",
       "actor": "bryanwhiting",
       "sha": "81a6f0c8fc307a599dac19b1157c7d554a369f9e",
-      "run_url": "https://github.com/bryanwhiting/weatherman/actions/runs/22322944203"
+      "run_url": "https://github.com/bryanwhiting/forecastingapi/actions/runs/22322944203"
     },
     "history_points": 12,
     "forecast_points": 48
