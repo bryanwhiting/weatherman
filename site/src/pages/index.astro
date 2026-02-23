@@ -90,6 +90,7 @@ const defaultPayload = JSON.stringify({
       <div>
         <button id="submit-btn" class="rounded-lg bg-sky-700 hover:bg-sky-600 px-4 py-2 font-semibold">Submit run</button>
         <div id="status" class="mt-2 text-sm text-slate-300"></div>
+        <div id="status-list" class="mt-2 space-y-1 text-sm"></div>
       </div>
     </div>
   </section>
@@ -121,12 +122,80 @@ const defaultPayload = JSON.stringify({
 
   <script type="module">
     const statusEl = document.getElementById('status');
+    const statusListEl = document.getElementById('status-list');
     const btn = document.getElementById('submit-btn');
     const payloadTab = document.getElementById('tab-payload');
     const testTab = document.getElementById('tab-test');
     const useM5Input = document.getElementById('use_m5');
     const payloadInput = document.getElementById('payload');
     let customPayloadCache = payloadInput.value;
+
+    const STORAGE_KEY = 'weatherman_recent_runs_v1';
+    const activeTimers = new Map();
+
+    const loadRuns = () => {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
+    };
+    const saveRuns = (runs) => localStorage.setItem(STORAGE_KEY, JSON.stringify(runs.slice(0, 12)));
+
+    const renderRuns = (runs) => {
+      if (!statusListEl) return;
+      if (!runs.length) {
+        statusListEl.innerHTML = '';
+        return;
+      }
+      statusListEl.innerHTML = runs.map((r) => {
+        const emoji = r.status === 'completed' ? (r.conclusion === 'success' ? '✅' : '❌') : '⏳';
+        const statusText = r.status === 'completed' ? (r.conclusion || 'completed') : (r.status || 'queued');
+        const href = r.html_url || r.actions_url || 'https://github.com/bryanwhiting/weatherman/actions/workflows/forecast-request.yml';
+        return `<div class="rounded border border-slate-700 bg-slate-900/50 p-2 text-xs text-slate-300">${emoji} <code>${r.slug}</code> — ${statusText} · <a href="${href}" target="_blank" rel="noreferrer" class="text-sky-300 underline">open</a></div>`;
+      }).join('');
+    };
+
+    const upsertRun = (entry) => {
+      const runs = loadRuns();
+      const idx = runs.findIndex((r) => r.slug === entry.slug);
+      if (idx >= 0) runs[idx] = { ...runs[idx], ...entry };
+      else runs.unshift(entry);
+      saveRuns(runs);
+      renderRuns(runs);
+    };
+
+    const pollRun = (slug, statusUrl, actionsUrl) => {
+      if (activeTimers.has(slug)) return;
+      let tries = 0;
+      const maxTries = 60; // ~6 minutes
+      const timer = setInterval(async () => {
+        tries += 1;
+        try {
+          const rs = await fetch(statusUrl);
+          const rj = await rs.json();
+          if (rj?.found) {
+            upsertRun({
+              slug,
+              status: rj.status,
+              conclusion: rj.conclusion,
+              html_url: rj.html_url,
+              actions_url: actionsUrl,
+              updated_at: rj.updated_at,
+            });
+            if (rj.status === 'completed') {
+              clearInterval(timer);
+              activeTimers.delete(slug);
+            }
+          } else {
+            upsertRun({ slug, status: 'locating', actions_url: actionsUrl });
+          }
+        } catch {
+          upsertRun({ slug, status: 'poll_error', actions_url: actionsUrl });
+        }
+        if (tries >= maxTries) {
+          clearInterval(timer);
+          activeTimers.delete(slug);
+        }
+      }, 6000);
+      activeTimers.set(slug, timer);
+    };
 
     const setMode = (useM5) => {
       useM5Input.value = String(useM5);
@@ -149,6 +218,14 @@ const defaultPayload = JSON.stringify({
     payloadTab?.addEventListener('click', () => setMode(false));
     testTab?.addEventListener('click', () => setMode(true));
 
+    // Restore prior run statuses on load
+    const existing = loadRuns();
+    renderRuns(existing);
+    existing.filter((r) => r.status && r.status !== 'completed').forEach((r) => {
+      const statusUrl = r.status_url || `/api/run-status?slug=${encodeURIComponent(r.slug)}`;
+      pollRun(r.slug, statusUrl, r.actions_url);
+    });
+
     btn?.addEventListener('click', async () => {
       try {
         statusEl.textContent = 'Submitting...';
@@ -170,39 +247,15 @@ const defaultPayload = JSON.stringify({
         const res = await fetch('/api/dispatch', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
         const json = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(json?.error || `Request failed (${res.status})`);
+
         const link = json?.actions_url || 'https://github.com/bryanwhiting/weatherman/actions/workflows/forecast-request.yml';
         const statusUrl = json?.status_url || `/api/run-status?slug=${encodeURIComponent(json?.slug || '')}`;
-        statusEl.innerHTML = `✅ Dispatched as <code>${json?.slug || 'run'}</code><br/><a href="${link}" target="_blank" rel="noreferrer" class="text-sky-300 underline">View GitHub Action</a><br/><span id="run-live-status" class="text-slate-300">Status: queued…</span>`;
+        const slug = json?.slug || 'run';
 
-        const liveEl = document.getElementById('run-live-status');
-        let tries = 0;
-        const maxTries = 40; // ~4 minutes
-        const timer = setInterval(async () => {
-          tries += 1;
-          try {
-            const rs = await fetch(statusUrl);
-            const rj = await rs.json();
-            if (!rj?.found) {
-              if (liveEl) liveEl.textContent = `Status: locating run…`;
-            } else {
-              const st = rj.status;
-              const conc = rj.conclusion;
-              const runLink = rj.html_url || link;
-              if (st === 'completed') {
-                if (liveEl) {
-                  const emoji = conc === 'success' ? '✅' : '❌';
-                  liveEl.innerHTML = `${emoji} Status: ${conc || 'completed'} · <a href="${runLink}" target="_blank" rel="noreferrer" class="text-sky-300 underline">run details</a>`;
-                }
-                clearInterval(timer);
-              } else {
-                if (liveEl) liveEl.innerHTML = `Status: ${st}… · <a href="${runLink}" target="_blank" rel="noreferrer" class="text-sky-300 underline">open</a>`;
-              }
-            }
-          } catch {
-            if (liveEl) liveEl.textContent = 'Status: polling failed (will retry)…';
-          }
-          if (tries >= maxTries) clearInterval(timer);
-        }, 6000);
+        statusEl.innerHTML = `✅ Dispatched as <code>${slug}</code> · <a href="${link}" target="_blank" rel="noreferrer" class="text-sky-300 underline">View GitHub Action</a>`;
+
+        upsertRun({ slug, status: 'queued', actions_url: link, status_url: statusUrl });
+        pollRun(slug, statusUrl, link);
       } catch (err) {
         statusEl.textContent = `❌ ${err.message}`;
       } finally {
