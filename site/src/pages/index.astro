@@ -96,9 +96,9 @@ const defaultPayload = JSON.stringify({
         <textarea id="payload" class="w-full min-h-52 rounded-lg border border-slate-700 bg-slate-950 p-3 font-mono text-sm">{defaultPayload}</textarea>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div>
         <button id="submit-btn" class="rounded-lg bg-sky-700 hover:bg-sky-600 px-4 py-2 font-semibold">Submit run</button>
-        <span id="status" class="text-sm text-slate-300"></span>
+        <div id="status" class="mt-2 text-sm text-slate-300"></div>
       </div>
     </div>
   </section>
@@ -179,7 +179,8 @@ const defaultPayload = JSON.stringify({
         const res = await fetch('/api/dispatch', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
         const json = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(json?.error || `Request failed (${res.status})`);
-        statusEl.textContent = `✅ Dispatched as ${json?.slug || 'run'}`;
+        const link = json?.actions_url || 'https://github.com/bryanwhiting/weatherman/actions/workflows/forecast-request.yml';
+        statusEl.innerHTML = `✅ Dispatched as <code>${json?.slug || 'run'}</code><br/><a href="${link}" target="_blank" rel="noreferrer" class="text-sky-300 underline">View GitHub Action</a>`;
       } catch (err) {
         statusEl.textContent = `❌ ${err.message}`;
       } finally {

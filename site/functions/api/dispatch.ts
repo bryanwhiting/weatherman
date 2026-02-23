@@ -106,7 +106,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       });
     }
 
-    return new Response(JSON.stringify({ ok: true, message: 'Workflow dispatched', slug }), {
+    const actionsUrl = `https://github.com/${repo}/actions/workflows/forecast-request.yml`;
+    return new Response(JSON.stringify({ ok: true, message: 'Workflow dispatched', slug, actions_url: actionsUrl }), {
       status: 200,
       headers: JSON_HEADERS,
     });
