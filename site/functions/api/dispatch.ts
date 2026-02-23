@@ -64,12 +64,15 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     const useM5 = Boolean(body.use_m5);
     const nSeries = Number(payloadObj.n_series ?? 3);
     if (useM5) {
-      payloadObj.series_name = 'demo_mode_m5';
-    } else if (String(payloadObj.series_name || '').trim() === 'demo_mode_m5') {
-      return new Response(JSON.stringify({ error: 'series_name "demo_mode_m5" is reserved for demo mode' }), {
-        status: 400,
-        headers: JSON_HEADERS,
-      });
+      payloadObj.series_names = ['demo_mode_m5'];
+    } else {
+      const names = Array.isArray(payloadObj.series_names) ? payloadObj.series_names : [];
+      if (names.includes('demo_mode_m5')) {
+        return new Response(JSON.stringify({ error: 'series_names cannot include "demo_mode_m5" outside demo mode' }), {
+          status: 400,
+          headers: JSON_HEADERS,
+        });
+      }
     }
 
     const cleanName = sanitizeSlug(runNameRaw) || 'forecast';

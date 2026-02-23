@@ -50,13 +50,14 @@ def _build_history(req: ForecastRequest) -> pd.DataFrame:
         rows = []
         for idx, series_values in enumerate(req.series, start=1):
             ds = pd.date_range(start=start, periods=len(series_values), freq=freq)
-            uid = f"{req.series_name}_{idx}"
+            uid = req.series_names[idx - 1] if idx - 1 < len(req.series_names) else f"series_{idx}"
             rows.extend({"unique_id": uid, "ds": d, "y": float(y)} for d, y in zip(ds, series_values))
         return pd.DataFrame(rows)
 
     # Single-series payload
     ds = pd.date_range(start=start, periods=len(req.series), freq=freq)
-    return pd.DataFrame({"unique_id": req.series_name, "ds": ds, "y": req.series})
+    uid = req.series_names[0] if req.series_names else "series_1"
+    return pd.DataFrame({"unique_id": uid, "ds": ds, "y": req.series})
 
 
 def _load_m5_history(req: ForecastRequest) -> pd.DataFrame:

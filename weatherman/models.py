@@ -11,7 +11,8 @@ class ForecastRequest(BaseModel):
     series: list[float] | list[list[float]] = Field(default_factory=list, description="Observed values")
     horizon: int = Field(24, ge=1, le=1000)
     model: Literal["nixtla", "autogluon", "auto"] = "auto"
-    series_name: str = "series_1"
+    series_names: list[str] = Field(default_factory=lambda: ["series_1"])
+    series_name: str | None = None  # backward compatibility
 
     use_m5: bool = False
     m5_series_count: int = Field(3, ge=1, le=20)
@@ -34,18 +35,25 @@ class ForecastRequest(BaseModel):
 
     @model_validator(mode="after")
     def validate_source(self) -> "ForecastRequest":
+        if self.series_name and not self.series_names:
+            self.series_names = [self.series_name]
+
         if self.use_m5:
-            self.series_name = "demo_mode_m5"
+            self.series_names = ["demo_mode_m5"]
         else:
-            if self.series_name == "demo_mode_m5":
-                raise ValueError('series_name "demo_mode_m5" is reserved for demo mode')
+            if any(name == "demo_mode_m5" for name in self.series_names):
+                raise ValueError('series_names cannot include "demo_mode_m5" outside demo mode')
             if len(self.series) == 0:
                 raise ValueError("series must contain values when use_m5=false")
             if isinstance(self.series[0], list):
                 for idx, ser in enumerate(self.series, start=1):
                     if len(ser) < 10:
                         raise ValueError(f"series[{idx}] must contain at least 10 points")
+                if len(self.series_names) == 1:
+                    self.series_names = [f"{self.series_names[0]}_{i}" for i in range(1, len(self.series)+1)]
             else:
                 if len(self.series) < 10:
                     raise ValueError("series must contain at least 10 points when use_m5=false")
+                if len(self.series_names) == 0:
+                    self.series_names = ["series_1"]
         return self

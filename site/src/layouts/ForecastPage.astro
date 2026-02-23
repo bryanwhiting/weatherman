@@ -41,7 +41,7 @@ const backtestLeaderboard = Object.values(
     </style>
   </head>
   <body>
-    <h1>Forecast: {data.request.series_name}</h1>
+    <h1>Forecast: {(data.request.series_names || []).join(", ") || data.request.series_name || "series"}</h1>
     <p class="meta">Backend: {data.backend} · Granularity: {data.request.granularity} · Horizon: {data.request.horizon} · M5: {String(Boolean(data.request.use_m5))}</p>
     {data?.meta?.github?.run_url && <p class="meta"><a href={data.meta.github.run_url} target="_blank" rel="noreferrer">GitHub action run ↗</a></p>}
 
