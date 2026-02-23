@@ -8,6 +8,9 @@
   },
   "dependencies": {
     "astro": "^5.13.5",
-    "chart.js": "^4.4.3"
+    "chart.js": "^4.4.3",
+    "tailwindcss": "^4.1.12",
+    "@tailwindcss/vite": "^4.1.12",
+    "zod": "^3.25.76"
   }
 }

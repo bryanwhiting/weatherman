@@ -1,4 +1,5 @@
 ---
+import MainLayout from './MainLayout.astro';
 const { data } = Astro.props;
 const history = data.history ?? [];
 const forecast = data.forecast ?? [];
@@ -18,134 +19,85 @@ const backtestLeaderboard = Object.values(
   .map((r) => ({ model: r.model, avgSmape: r.count ? r.total / r.count : 0, samples: r.count }))
   .sort((a, b) => a.avgSmape - b.avgSmape);
 ---
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Forecast</title>
-    <style>
-      body { font-family: Inter, system-ui, sans-serif; padding: 24px; max-width: 1080px; margin: auto; }
-      .meta { color: #666; margin-bottom: 10px; }
-      .chart-wrap { width: 100%; height: 420px; }
-      #chart { width: 100%; height: 100%; }
-      pre { background:#f7f7f7; padding: 12px; border-radius: 8px; overflow:auto; }
-      table { border-collapse: collapse; width: 100%; margin: 12px 0 20px; }
-      th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; }
-      th { background: #f8f8f8; }
-      .winner { color: #15803d; font-weight: 700; }
-      @media (max-width: 720px) {
-        .chart-wrap { height: 320px; }
-        table { display: block; overflow-x: auto; }
-        th, td { white-space: nowrap; }
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Forecast: {(data.request.series_names || []).join(", ") || data.request.series_name || "series"}</h1>
-    <p class="meta">Backend: {data.backend} · Granularity: {data.request.granularity} · Horizon: {data.request.horizon} · M5: {String(Boolean(data.request.use_m5))}</p>
-    {data?.meta?.github?.run_url && <p class="meta"><a href={data.meta.github.run_url} target="_blank" rel="noreferrer">GitHub action run ↗</a></p>}
+<MainLayout title="Forecast Report">
+  <h1 class="text-2xl font-bold">Forecast: {(data.request.series_names || []).join(', ') || data.request.series_name || 'series'}</h1>
+  <p class="text-slate-400 mt-1">Backend: {data.backend} · Granularity: {data.request.granularity} · Horizon: {data.request.horizon}</p>
+  {data?.meta?.github?.run_url && <p class="text-sm mt-1"><a href={data.meta.github.run_url} target="_blank" rel="noreferrer" class="text-sky-300">GitHub action run ↗</a></p>}
 
-    <h2>Actual vs Forecast</h2>
-    <div class="chart-wrap"><canvas id="chart"></canvas></div>
+  <section class="mt-4 rounded-xl border border-slate-700 bg-slate-900/70 p-4">
+    <h2 class="font-semibold mb-2">Actual vs Forecast</h2>
+    <div class="h-[320px] md:h-[420px]"><canvas id="chart" class="w-full h-full"></canvas></div>
+  </section>
 
-    {backtest.length > 0 && (
-      <>
-        <h2>Backtest details (rolling windows)</h2>
-        <table>
-          <thead>
-            <tr><th>Window</th><th>Model</th><th>SMAPE</th><th>Horizon</th><th>Holdout Range</th></tr>
-          </thead>
-          <tbody>
-            {backtest.map((row) => (
-              <tr>
-                <td>{row.window}</td>
-                <td>{row.model}</td>
-                <td>{row.smape}</td>
-                <td>{row.horizon}</td>
-                <td>{new Date(String(row.holdout_start).replace(' ', 'T')).toLocaleString()} → {new Date(String(row.holdout_end).replace(' ', 'T')).toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+  {backtest.length > 0 && (
+    <section class="mt-4 rounded-xl border border-slate-700 bg-slate-900/70 p-4 overflow-x-auto">
+      <h2 class="font-semibold mb-2">Backtest details</h2>
+      <table class="min-w-[760px] text-sm w-full">
+        <thead><tr class="text-slate-300"><th class="p-2 text-left">Window</th><th class="p-2 text-left">Model</th><th class="p-2 text-left">SMAPE</th><th class="p-2 text-left">Horizon</th><th class="p-2 text-left">Holdout Range</th></tr></thead>
+        <tbody>
+          {backtest.map((row) => (
+            <tr>
+              <td class="p-2">{row.window}</td><td class="p-2">{row.model}</td><td class="p-2">{row.smape}</td><td class="p-2">{row.horizon}</td><td class="p-2">{String(row.holdout_start)} → {String(row.holdout_end)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-        {backtestLeaderboard.length > 0 && (
-          <>
-            <h2>Backtest leaderboard (this run)</h2>
-            <table>
-              <thead>
-                <tr><th>Rank</th><th>Model</th><th>Avg SMAPE</th><th>Samples</th></tr>
-              </thead>
-              <tbody>
-                {backtestLeaderboard.map((row, idx) => (
-                  <tr>
-                    <td>{idx + 1}</td>
-                    <td class={idx === 0 ? 'winner' : ''}>{row.model}</td>
-                    <td>{row.avgSmape.toFixed(4)}</td>
-                    <td>{row.samples}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-      </>
-    )}
+      {backtestLeaderboard.length > 0 && (
+        <>
+          <h3 class="font-semibold mt-4 mb-2">Backtest leaderboard (this run)</h3>
+          <table class="min-w-[420px] text-sm w-full">
+            <thead><tr class="text-slate-300"><th class="p-2 text-left">Rank</th><th class="p-2 text-left">Model</th><th class="p-2 text-left">Avg SMAPE</th><th class="p-2 text-left">Samples</th></tr></thead>
+            <tbody>
+              {backtestLeaderboard.map((row, idx) => (
+                <tr>
+                  <td class="p-2">{idx + 1}</td><td class={`p-2 ${idx===0?'text-emerald-400 font-semibold':''}`}>{row.model}</td><td class="p-2">{row.avgSmape.toFixed(4)}</td><td class="p-2">{row.samples}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+    </section>
+  )}
 
-    <details>
-      <summary><h2 style="display:inline;">Payload</h2></summary>
-      <pre>{JSON.stringify(data.request, null, 2)}</pre>
-    </details>
+  <details class="mt-4 rounded-xl border border-slate-700 bg-slate-900/70 p-4">
+    <summary class="cursor-pointer font-semibold">Payload</summary>
+    <pre class="mt-2 overflow-auto rounded bg-slate-950 p-3 text-xs">{JSON.stringify(data.request, null, 2)}</pre>
+  </details>
 
-    <script type="module" define:vars={{ points, models }}>
-      import Chart from 'chart.js/auto';
+  <script type="module" define:vars={{ points, models }}>
+    import Chart from 'chart.js/auto';
+    const parseDs = (v) => {
+      const s = String(v ?? '');
+      const normalized = s.includes('T') ? s : s.replace(' ', 'T');
+      const d = new Date(normalized);
+      return Number.isNaN(d.getTime()) ? null : d;
+    };
 
-      const parseDs = (v) => {
-        const s = String(v ?? '');
-        const normalized = s.includes('T') ? s : s.replace(' ', 'T');
-        const d = new Date(normalized);
-        return Number.isNaN(d.getTime()) ? null : d;
-      };
+    const keyed = points.map((p) => {
+      const d = parseDs(p.ds);
+      if (!d) return null;
+      return { ...p, iso: d.toISOString() };
+    }).filter(Boolean);
 
-      const keyed = points
-        .map((p) => {
-          const d = parseDs(p.ds);
-          if (!d) return null;
-          return { ...p, iso: d.toISOString() };
-        })
-        .filter(Boolean);
+    const allLabels = [...new Set(keyed.map((p) => p.iso))].sort();
+    const labelFmt = allLabels.map((x) => new Date(x).toLocaleString());
+    const pointMap = new Map(keyed.map((p) => [`${p.iso}|${p.type}|${p.model ?? ''}`, p]));
 
-      const allLabels = [...new Set(keyed.map((p) => p.iso))].sort();
-      const labelFmt = allLabels.map((x) => new Date(x).toLocaleString());
-      const pointMap = new Map(keyed.map((p) => [`${p.iso}|${p.type}|${p.model ?? ''}`, p]));
-
-      const datasets = [
-        {
-          label: 'Actual',
-          data: allLabels.map((l) => pointMap.get(`${l}|actual|`)?.y ?? null),
-          borderColor: '#1d4ed8',
-          spanGaps: true,
-        },
-      ];
-
-      const colors = ['#dc2626', '#16a34a', '#7c3aed', '#ea580c', '#0891b2'];
-      models.forEach((m, idx) => {
-        datasets.push({
-          label: `Forecast (${m})`,
-          data: allLabels.map((l) => pointMap.get(`${l}|forecast|${m}`)?.yhat ?? null),
-          borderColor: colors[idx % colors.length],
-          borderDash: [6, 3],
-          spanGaps: true,
-        });
+    const datasets = [{ label: 'Actual', data: allLabels.map((l) => pointMap.get(`${l}|actual|`)?.y ?? null), borderColor: '#38bdf8', spanGaps: true }];
+    const colors = ['#ef4444', '#22c55e', '#a855f7', '#f97316'];
+    models.forEach((m, idx) => {
+      datasets.push({
+        label: `Forecast (${m})`,
+        data: allLabels.map((l) => pointMap.get(`${l}|forecast|${m}`)?.yhat ?? null),
+        borderColor: colors[idx % colors.length],
+        borderDash: [6, 3],
+        spanGaps: true,
       });
+    });
 
-      const el = document.getElementById('chart');
-      if (el) {
-        new Chart(el, {
-          type: 'line',
-          data: { labels: labelFmt, datasets },
-          options: { responsive: true, maintainAspectRatio: false },
-        });
-      }
-    </script>
-  </body>
-</html>
+    const el = document.getElementById('chart');
+    if (el) new Chart(el, { type: 'line', data: { labels: labelFmt, datasets }, options: { responsive: true, maintainAspectRatio: false } });
+  </script>
+</MainLayout>

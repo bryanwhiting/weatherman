@@ -1,13 +1,35 @@
 ---
+import { z } from 'zod';
 import ForecastPage from '../../layouts/ForecastPage.astro';
 
 export async function getStaticPaths() {
+  const forecastSchema = z.object({
+    request: z.object({
+      start_datetime: z.string().optional(),
+      granularity: z.string().optional(),
+      horizon: z.number().optional(),
+      model: z.string().optional(),
+      run_name_root: z.string().optional(),
+      n_series: z.number().optional(),
+      backtest_windows: z.number().optional(),
+      series_names: z.array(z.string()).optional(),
+      series: z.any().optional(),
+      use_m5: z.boolean().optional(),
+    }),
+    backend: z.string(),
+    history: z.array(z.any()).default([]),
+    forecast: z.array(z.any()).default([]),
+    backtest: z.array(z.any()).default([]),
+    meta: z.any().optional(),
+  });
+
   const modules = import.meta.glob('../../data/forecasts/*.json', { eager: true });
   return Object.entries(modules).map(([path, mod]) => {
     const slug = path.split('/').pop().replace('.json', '');
+    const parsed = forecastSchema.parse(mod.default ?? mod);
     return {
       params: { slug },
-      props: { data: mod.default ?? mod }
+      props: { data: parsed }
     };
   });
 }
