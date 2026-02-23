@@ -31,8 +31,12 @@ const defaultPayload = JSON.stringify({
   horizon: 24,
   model: 'nixtla',
   run_name_root: 'my-forecast-run',
+  n_series: 2,
   backtest_windows: 3,
-  series: [100, 102, 99, 101, 103, 104, 106, 108, 110, 111, 113, 116],
+  series: [
+    [100, 102, 99, 101, 103, 104, 106, 108, 110, 111, 113, 116],
+    [80, 82, 81, 83, 86, 88, 87, 89, 91, 94, 96, 97]
+  ],
 }, null, 2);
 
 const gitHash = (() => {
@@ -139,11 +143,6 @@ const version = `v0.${ymdhms}-${gitHash}`;
           </div>
 
           <div>
-            <label for="m5_series_count">M5 series count (test mode)</label>
-            <input id="m5_series_count" type="number" value="3" min="1" max="20" />
-          </div>
-
-          <div>
             <label for="payload">Payload JSON</label>
             <details class="instructions">
               <summary>Payload instructions</summary>
@@ -164,7 +163,7 @@ const version = `v0.${ymdhms}-${gitHash}`;
                     <tr><td><code>granularity</code></td><td>Custom mode</td><td>Series frequency</td><td><code>1h</code>, <code>1d</code></td></tr>
                     <tr><td><code>series_name</code></td><td>Custom mode</td><td>Name of the series (<code>demo_mode_m5</code> is reserved)</td><td><code>demand_store_1</code></td></tr>
                     <tr><td><code>horizon</code></td><td>No</td><td>Forecast periods ahead</td><td><code>24</code></td></tr>
-                    <tr><td><code>backtest_windows</code></td><td>No</td><td>Rolling backtest window count</td><td><code>3</code></td></tr>
+                    <tr><td><code>n_series</code></td><td>No</td><td>Number of series to use (for M5 sampling and optional metadata)</td><td><code>3</code></td></tr>\n                    <tr><td><code>backtest_windows</code></td><td>No</td><td>Rolling backtest window count</td><td><code>3</code></td></tr>
                     <tr><td><code>model</code></td><td>No</td><td>Forecast backend selector</td><td><code>nixtla</code></td></tr>
                     <tr><td><code>series</code></td><td>Custom mode</td><td>Numeric values in order (no gaps implied)</td><td><code>[100,102,99,...]</code></td></tr>
                   </tbody>
@@ -245,7 +244,7 @@ const version = `v0.${ymdhms}-${gitHash}`;
 
         if (useM5) {
           customPayloadCache = payloadInput.value;
-          payloadInput.value = JSON.stringify({ run_name_root: 'demo-m5-test', series_name: 'demo_mode_m5', backtest_windows: 3 }, null, 2);
+          payloadInput.value = JSON.stringify({ run_name_root: 'demo-m5-test', series_name: 'demo_mode_m5', n_series: 3, backtest_windows: 3, series: [] }, null, 2);
           payloadInput.readOnly = true;
           payloadInput.style.opacity = '0.55';
         } else {
@@ -264,7 +263,6 @@ const version = `v0.${ymdhms}-${gitHash}`;
           btn.disabled = true;
 
           const use_m5 = document.getElementById('use_m5').value === 'true';
-          const m5_series_count = document.getElementById('m5_series_count').value;
           const payloadRaw = document.getElementById('payload').value;
 
           const parsedPayload = JSON.parse(payloadRaw || '{}'); // validate + inspect
@@ -275,7 +273,6 @@ const version = `v0.${ymdhms}-${gitHash}`;
             repo: 'bryanwhiting/weatherman',
             run_name_root: runNameRoot,
             use_m5,
-            m5_series_count: Number(m5_series_count),
             payload: payloadRaw,
             backtest_windows: Number(backtest_windows),
           };

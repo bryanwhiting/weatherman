@@ -62,6 +62,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     }
 
     const useM5 = Boolean(body.use_m5);
+    const nSeries = Number(payloadObj.n_series ?? 3);
     if (useM5) {
       payloadObj.series_name = 'demo_mode_m5';
     } else if (String(payloadObj.series_name || '').trim() === 'demo_mode_m5') {
@@ -87,7 +88,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         inputs: {
           slug,
           use_m5: String(useM5),
-          m5_series_count: String(body.m5_series_count ?? 3),
+          m5_series_count: String(Number.isFinite(nSeries) ? nSeries : 3),
           payload: JSON.stringify(payloadObj),
           backtest_windows: String(body.backtest_windows ?? 3),
         },

@@ -41,6 +41,20 @@ def _smape(y_true: np.ndarray, y_pred: np.ndarray) -> float:
 def _build_history(req: ForecastRequest) -> pd.DataFrame:
     start = datetime.fromisoformat(req.start_datetime)
     freq = FREQ_MAP[req.granularity]
+
+    if len(req.series) == 0:
+        return pd.DataFrame(columns=["unique_id", "ds", "y"])
+
+    # Multi-series payload: series is list[list[number]]
+    if isinstance(req.series[0], list):
+        rows = []
+        for idx, series_values in enumerate(req.series, start=1):
+            ds = pd.date_range(start=start, periods=len(series_values), freq=freq)
+            uid = f"{req.series_name}_{idx}"
+            rows.extend({"unique_id": uid, "ds": d, "y": float(y)} for d, y in zip(ds, series_values))
+        return pd.DataFrame(rows)
+
+    # Single-series payload
     ds = pd.date_range(start=start, periods=len(req.series), freq=freq)
     return pd.DataFrame({"unique_id": req.series_name, "ds": ds, "y": req.series})
 
