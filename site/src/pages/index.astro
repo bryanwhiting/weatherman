@@ -92,7 +92,10 @@ const version = `v0.${ymdhms}-${gitHash}`;
       .tab.active { background: #1c2a4d; border-color: #4a65a1; color: #fff; font-weight: 600; }
       .instructions { margin: .35rem 0 .15rem; }
       .instructions > summary { cursor: pointer; color: #8cc0ff; font-size: .85rem; }
-      .instructions-body { margin-top: .45rem; border: 1px solid #2c3a61; background: #0f1730; border-radius: 10px; padding: .65rem .75rem; color: #cfe0ff; font-size: .84rem; line-height: 1.35; }
+      .instructions-body { margin-top: .45rem; border: 1px solid #2c3a61; background: #0f1730; border-radius: 10px; padding: .65rem .75rem; color: #cfe0ff; font-size: .84rem; line-height: 1.35; overflow: hidden; }
+      .instructions-body p, .instructions-body ul { margin: .5rem 0; }
+      .instructions-body table { width: 100%; max-width: 100%; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: .8rem; border-collapse: collapse; }
+      .instructions-body th, .instructions-body td { white-space: nowrap; padding: 6px 8px; }
       label { font-size: .85rem; color: #b7c5e2; display: block; margin-bottom: .2rem; }
       input, textarea, select { width: 100%; max-width: 100%; border: 1px solid #2c3a61; background: #0f1730; color: #eaf1ff; border-radius: 10px; padding: .62rem .7rem; font: inherit; }
       textarea { min-height: 150px; line-height: 1.35; overflow-wrap: anywhere; }
@@ -110,6 +113,10 @@ const version = `v0.${ymdhms}-${gitHash}`;
         .meta { font-size: .82rem; gap: .45rem; }
         table { font-size: .86rem; display: block; overflow-x: auto; max-width: 100%; }
         th, td { padding: 6px 8px; white-space: nowrap; }
+        .instructions > summary { font-size: .8rem; }
+        .instructions-body { font-size: .78rem; padding: .55rem .6rem; }
+        .instructions-body table { font-size: .74rem; }
+        .instructions-body th, .instructions-body td { padding: 5px 7px; }
         input, textarea, select { font-size: 16px; } /* prevent iOS zoom */
         textarea { min-height: 190px; }
         #submit-btn { width: 100%; }
