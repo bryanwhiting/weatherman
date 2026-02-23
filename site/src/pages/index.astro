@@ -7,7 +7,6 @@ const forecastData = Object.values(forecastModules).map((mod: any) => mod.defaul
 const runs = forecastData
   .map((d: any) => ({
     slug: d?.meta?.slug || d?.request?.run_name_root || 'run',
-    title: d?.meta?.slug || d?.request?.run_name_root || 'run',
     backend: d?.backend || 'nixtla',
     granularity: d?.request?.granularity || 'n/a',
     horizon: d?.request?.horizon ?? 'n/a',
@@ -17,7 +16,6 @@ const runs = forecastData
     path: `/forecasts/${d?.meta?.slug || d?.request?.run_name_root || 'run'}`,
   }))
   .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
-
 
 const defaultPayload = JSON.stringify({
   start_datetime: '2026-01-01T00:00:00',
@@ -38,69 +36,102 @@ const defaultPayload = JSON.stringify({
 ---
 <MainLayout title="ForecastingAPI.com">
   <Navbar />
-  <p class="text-slate-400 mt-1">Welcome to ForecastingAPI.com! A free API to forecast your time series</p>
-  <p class="text-sm mt-1"><a href="/m5" class="text-sky-300 underline">What is M5 and why it matters?</a></p>
 
-  <section class="mt-4 rounded-xl border border-slate-700 bg-slate-900/70 p-4">
-    <h2 class="text-xl font-semibold mb-2">Enter Payload, get Forecasts</h2>
+  <section class="relative mt-5 overflow-hidden rounded-2xl border border-slate-700/80 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 p-6 md:p-8">
+    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(56,189,248,0.15),transparent_35%),radial-gradient(circle_at_90%_10%,rgba(99,102,241,0.15),transparent_30%)]"></div>
+    <div class="relative">
+      <p class="text-xs uppercase tracking-[0.18em] text-sky-300/90">Serverless Forecasting Engine</p>
+      <h1 class="mt-2 text-3xl font-semibold leading-tight md:text-5xl">Welcome to weatherman! A free API to forecast your time series</h1>
+      <p class="mt-3 max-w-3xl text-slate-300">ForecastingAPI.com turns compact JSON payloads into production-grade forecasts, rolling backtests, SMAPE accuracy reports, and shareable run pages — all in one flow.</p>
 
-    <div class="space-y-3">
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#payload-form" class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-500">Start forecasting</a>
+        <a href="/m5" class="rounded-lg border border-slate-600 bg-slate-900/80 px-4 py-2 text-sm font-semibold text-sky-200 transition hover:border-sky-400">What is M5 and why it matters?</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-4 grid gap-4 md:grid-cols-3">
+    <article class="rounded-xl border border-slate-700 bg-slate-900/60 p-4">
+      <h3 class="font-semibold">1) Ingest</h3>
+      <p class="mt-1 text-sm text-slate-300">Paste one payload with multi-series data. Keep it compact and deterministic.</p>
+    </article>
+    <article class="rounded-xl border border-slate-700 bg-slate-900/60 p-4">
+      <h3 class="font-semibold">2) Evaluate</h3>
+      <p class="mt-1 text-sm text-slate-300">Run rolling backtests with AutoARIMA + AutoETS, then compare SMAPE by model/window.</p>
+    </article>
+    <article class="rounded-xl border border-slate-700 bg-slate-900/60 p-4">
+      <h3 class="font-semibold">3) Ship</h3>
+      <p class="mt-1 text-sm text-slate-300">Get a permalinked forecast report with per-series charts and backfill diagnostics.</p>
+    </article>
+  </section>
+
+  <section id="payload-form" class="mt-5 rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-6">
+    <h2 class="text-2xl font-semibold">Enter Payload, get Forecasts</h2>
+    <p class="mt-1 text-sm text-slate-300">Supply your own payload, or use our M5 demo</p>
+
+    <div class="mt-4 space-y-4">
       <div>
-        <label class="block text-sm text-slate-300 mb-1">Supply your own payload, or use our M5 demo</label>
         <div class="grid grid-cols-2 gap-2">
           <button type="button" class="tab active rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm font-medium" id="tab-payload">Supply payload</button>
-          <button type="button" class="tab rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm font-medium" id="tab-test">Run M5 test</button>
+          <button type="button" class="tab rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm font-medium" id="tab-test">Run M5 demo</button>
         </div>
         <input id="use_m5" type="hidden" value="false" />
       </div>
 
       <div>
-        <label for="payload" class="block text-sm text-slate-300 mb-1">Paste JSON Payload below</label>
-        <details class="rounded-lg border border-slate-700 bg-slate-900 p-2 mb-2">
-          <summary class="cursor-pointer text-sm text-sky-300">Payload instructions</summary>
-          <div class="mt-2 text-xs md:text-sm text-slate-200 space-y-2">
-            <p>⚠️ <strong>Time series are assumed to be continuous at your time granularity!</strong> If not, backfill them.</p>
-            <ul class="list-disc ml-5 space-y-1">
-              <li>Payload is JSON only.</li>
-              <li>For custom runs, provide values in <code>series</code>.</li>
-              <li>For M5 test mode, use <code>series_names: ["demo_mode_m5"]</code> and <code>series: []</code>.</li>
-            </ul>
+        <label for="payload" class="block text-sm font-medium text-slate-200 mb-2">Paste JSON Payload below</label>
+        <details class="rounded-lg border border-slate-700 bg-slate-900 p-3">
+          <summary class="cursor-pointer text-sm font-medium text-sky-300">Payload instructions</summary>
+          <div class="mt-3 text-xs md:text-sm text-slate-200 space-y-2">
+            <p>⚠️ <strong>Time series are assumed to be continuous at your time granularity.</strong> If they are not, backfill them before submitting.</p>
             <div class="overflow-x-auto">
-              <table class="min-w-[680px] text-xs border border-slate-700">
-                <thead class="bg-slate-800"><tr><th class="p-2 border border-slate-700 text-left">Field</th><th class="p-2 border border-slate-700 text-left">Required</th><th class="p-2 border border-slate-700 text-left">Description</th><th class="p-2 border border-slate-700 text-left">Example</th></tr></thead>
+              <table class="min-w-[760px] w-full border border-slate-700 text-xs">
+                <thead class="bg-slate-800">
+                  <tr>
+                    <th class="p-2 text-left border border-slate-700">Field</th>
+                    <th class="p-2 text-left border border-slate-700">Required</th>
+                    <th class="p-2 text-left border border-slate-700">Description</th>
+                    <th class="p-2 text-left border border-slate-700">Example</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td class="p-2 border border-slate-700"><code>run_name_root</code></td><td class="p-2 border border-slate-700">Yes</td><td class="p-2 border border-slate-700">Base run name; backend prepends PST timestamp</td><td class="p-2 border border-slate-700"><code>my-run</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>start_datetime</code></td><td class="p-2 border border-slate-700">Custom mode</td><td class="p-2 border border-slate-700">First timestamp for the series (ISO)</td><td class="p-2 border border-slate-700"><code>2026-01-01T17:15:00</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>granularity</code></td><td class="p-2 border border-slate-700">Custom mode</td><td class="p-2 border border-slate-700">Time spacing between points</td><td class="p-2 border border-slate-700"><code>1h</code>, <code>1d</code>, <code>15m</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>horizon</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Forecast periods to predict after history</td><td class="p-2 border border-slate-700"><code>24</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>model</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Forecast backend</td><td class="p-2 border border-slate-700"><code>nixtla</code>, <code>autogluon</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>seasonal_period</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Season length for AutoARIMA/AutoETS (use 7 for weekly daily data)</td><td class="p-2 border border-slate-700"><code>7</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>n_series</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Series count hint (used for M5 demo sampling)</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>backtest_windows</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Rolling holdout window count for SMAPE backtests</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>series_names</code></td><td class="p-2 border border-slate-700">Custom mode</td><td class="p-2 border border-slate-700">List of names for each series (<code>demo_mode_m5</code> reserved for demo)</td><td class="p-2 border border-slate-700"><code>["trend","seasonal","combined"]</code></td></tr>
-                  <tr><td class="p-2 border border-slate-700"><code>series</code></td><td class="p-2 border border-slate-700">Custom mode</td><td class="p-2 border border-slate-700">Data values. Single list or list-of-lists (continuous, no gaps)</td><td class="p-2 border border-slate-700"><code>[[...],[...],[...]]</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>run_name_root</code></td><td class="p-2 border border-slate-700">Yes</td><td class="p-2 border border-slate-700">Base run name; app prepends PST timestamp</td><td class="p-2 border border-slate-700"><code>my-run</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>start_datetime</code></td><td class="p-2 border border-slate-700">Custom</td><td class="p-2 border border-slate-700">First timestamp in ISO format</td><td class="p-2 border border-slate-700"><code>2026-01-01T00:00:00</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>granularity</code></td><td class="p-2 border border-slate-700">Custom</td><td class="p-2 border border-slate-700">Step size between points</td><td class="p-2 border border-slate-700"><code>1d</code>, <code>1h</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>horizon</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Forecast periods after history</td><td class="p-2 border border-slate-700"><code>7</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>model</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Engine selector</td><td class="p-2 border border-slate-700"><code>nixtla</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>seasonal_period</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Season length for ARIMA/ETS</td><td class="p-2 border border-slate-700"><code>7</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>n_series</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Series count hint (M5 sampling)</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>backtest_windows</code></td><td class="p-2 border border-slate-700">No</td><td class="p-2 border border-slate-700">Rolling holdout windows for SMAPE</td><td class="p-2 border border-slate-700"><code>3</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>series_names</code></td><td class="p-2 border border-slate-700">Custom</td><td class="p-2 border border-slate-700">Series IDs (<code>demo_mode_m5</code> reserved)</td><td class="p-2 border border-slate-700"><code>["trend","seasonal","combined"]</code></td></tr>
+                  <tr><td class="p-2 border border-slate-700"><code>series</code></td><td class="p-2 border border-slate-700">Custom</td><td class="p-2 border border-slate-700">Single list or list-of-lists</td><td class="p-2 border border-slate-700"><code>[[...],[...],[...]]</code></td></tr>
                 </tbody>
               </table>
             </div>
           </div>
         </details>
-        <textarea id="payload" class="w-full min-h-52 rounded-lg border border-slate-700 bg-slate-950 p-3 font-mono text-sm">{defaultPayload}</textarea>
+
+        <textarea id="payload" class="mt-3 w-full min-h-60 rounded-xl border border-slate-700 bg-slate-950 p-3 font-mono text-sm">{defaultPayload}</textarea>
       </div>
 
       <div>
-        <button id="submit-btn" class="rounded-lg bg-sky-700 hover:bg-sky-600 px-4 py-2 font-semibold">Forecast It!</button>
+        <button id="submit-btn" class="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white transition hover:bg-sky-500">Forecast It!</button>
         <div id="status" class="mt-2 text-sm text-slate-300"></div>
         <div id="status-list" class="mt-2 space-y-1 text-sm"></div>
       </div>
     </div>
   </section>
-  <section class="mt-4 rounded-xl border border-slate-700 bg-slate-900/70 p-4">
-    <h2 class="text-lg font-semibold mb-3">All Runs</h2>
-    <div class="grid gap-3">
+
+  <section class="mt-5 rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-6">
+    <h2 class="text-xl font-semibold">All Runs</h2>
+    <p class="mt-1 text-sm text-slate-300">Most recent forecast outputs available right now.</p>
+    <div class="mt-4 grid gap-3 md:grid-cols-2">
       {runs.map((run) => (
-        <article class="rounded-xl border border-slate-700 bg-slate-900/50 p-4">
-          <h3 class="font-semibold text-sky-300"><a href={run.path}>{run.slug ?? run.title}</a></h3>
-          <p class="text-sm text-slate-400 mt-1">{run.backend} · {run.granularity} · horizon {run.horizon} · history {run.history_points} · forecast {run.forecast_points}</p>
+        <article class="rounded-xl border border-slate-700 bg-slate-900/50 p-4 transition hover:border-sky-500/50">
+          <h3 class="font-semibold text-sky-300"><a href={run.path}>{run.slug}</a></h3>
+          <p class="mt-1 text-xs text-slate-400">{run.backend} · {run.granularity} · horizon {run.horizon}</p>
+          <p class="text-xs text-slate-400">history {run.history_points} · forecast {run.forecast_points}</p>
         </article>
       ))}
     </div>
@@ -126,10 +157,8 @@ const defaultPayload = JSON.stringify({
 
     const renderRuns = (runs) => {
       if (!statusListEl) return;
-      if (!runs.length) {
-        statusListEl.innerHTML = '';
-        return;
-      }
+      if (!runs.length) return (statusListEl.innerHTML = '');
+
       statusListEl.innerHTML = runs.map((r) => {
         const emoji = r.status === 'completed' ? (r.conclusion === 'success' ? '✅' : '❌') : '⏳';
         const statusText = r.status === 'completed' ? (r.conclusion || 'completed') : (r.status || 'queued');
@@ -154,21 +183,14 @@ const defaultPayload = JSON.stringify({
     const pollRun = (slug, statusUrl, actionsUrl) => {
       if (activeTimers.has(slug)) return;
       let tries = 0;
-      const maxTries = 60; // ~6 minutes
+      const maxTries = 60;
       const timer = setInterval(async () => {
         tries += 1;
         try {
           const rs = await fetch(statusUrl);
           const rj = await rs.json();
           if (rj?.found) {
-            upsertRun({
-              slug,
-              status: rj.status,
-              conclusion: rj.conclusion,
-              html_url: rj.html_url,
-              actions_url: actionsUrl,
-              updated_at: rj.updated_at,
-            });
+            upsertRun({ slug, status: rj.status, conclusion: rj.conclusion, html_url: rj.html_url, actions_url: actionsUrl, updated_at: rj.updated_at });
             if (rj.status === 'completed') {
               if (rj.conclusion === 'success') {
                 statusEl.innerHTML = `✅ Your forecast is ready: <a href="/forecasts/${slug}" class="text-emerald-300 underline">/forecasts/${slug}</a>, or refresh this browser`;
@@ -194,8 +216,10 @@ const defaultPayload = JSON.stringify({
       useM5Input.value = String(useM5);
       payloadTab.classList.toggle('active', !useM5);
       testTab.classList.toggle('active', useM5);
-      payloadTab.classList.toggle('bg-slate-800', !useM5); payloadTab.classList.toggle('bg-slate-900', useM5);
-      testTab.classList.toggle('bg-slate-800', useM5); testTab.classList.toggle('bg-slate-900', !useM5);
+      payloadTab.classList.toggle('bg-slate-800', !useM5);
+      payloadTab.classList.toggle('bg-slate-900', useM5);
+      testTab.classList.toggle('bg-slate-800', useM5);
+      testTab.classList.toggle('bg-slate-900', !useM5);
       if (useM5) {
         customPayloadCache = payloadInput.value;
         payloadInput.value = JSON.stringify({ start_datetime: '2026-01-01T00:00:00', granularity: '1d', horizon: 24, model: 'nixtla', seasonal_period: 7, run_name_root: 'demo-m5-test', n_series: 3, backtest_windows: 3, series_names: ['demo_mode_m5'], series: [] }, null, 2);
@@ -211,7 +235,6 @@ const defaultPayload = JSON.stringify({
     payloadTab?.addEventListener('click', () => setMode(false));
     testTab?.addEventListener('click', () => setMode(true));
 
-    // Restore prior run statuses on load
     const existing = loadRuns();
     renderRuns(existing);
     existing.filter((r) => r.status && r.status !== 'completed').forEach((r) => {
