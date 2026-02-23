@@ -26,13 +26,22 @@ def main() -> None:
     parser.add_argument("--repo", default="")
     parser.add_argument("--actor", default="")
     parser.add_argument("--sha", default="")
+    parser.add_argument("--use-m5", action="store_true")
+    parser.add_argument("--m5-series-count", type=int, default=3)
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
     tmp_dir = root / ".tmp"
     tmp_dir.mkdir(exist_ok=True)
 
-    request_obj = json.loads(args.payload)
+    request_obj = json.loads(args.payload) if args.payload.strip() else {}
+    if args.use_m5:
+        request_obj["use_m5"] = True
+        request_obj.setdefault("m5_series_count", args.m5_series_count)
+        request_obj.setdefault("series_name", "m5_sample")
+        request_obj.setdefault("granularity", "1d")
+    request_obj.setdefault("compare_algorithms", True)
+    request_obj.setdefault("backtest", True)
     request_path = tmp_dir / f"{args.slug}.request.json"
     output_path = root / "site" / "src" / "data" / "forecasts" / f"{args.slug}.json"
     index_path = root / "site" / "src" / "data" / "forecast-index.json"

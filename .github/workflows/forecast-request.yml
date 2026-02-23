@@ -6,9 +6,19 @@ on:
       slug:
         description: "Output slug for forecast page"
         required: true
+      use_m5:
+        description: "Use Nixtla datasetsforecast M5 sample"
+        required: false
+        default: false
+        type: boolean
+      m5_series_count:
+        description: "How many M5 series to sample (small for cost/speed)"
+        required: false
+        default: "3"
       payload:
-        description: "Forecast request JSON"
-        required: true
+        description: "Forecast request JSON (ignored for series values when use_m5=true)"
+        required: false
+        default: "{}"
 
 permissions:
   contents: write
@@ -38,7 +48,9 @@ jobs:
             --repo "${{ github.repository }}" \
             --run-id "${{ github.run_id }}" \
             --actor "${{ github.actor }}" \
-            --sha "${{ github.sha }}"
+            --sha "${{ github.sha }}" \
+            ${{ inputs.use_m5 && '--use-m5' || '' }} \
+            --m5-series-count "${{ inputs.m5_series_count }}"
 
       - name: Commit output
         run: |

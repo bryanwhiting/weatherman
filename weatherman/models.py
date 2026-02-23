@@ -1,17 +1,22 @@
 from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 Granularity = Literal["15m", "30m", "1h", "4h", "1d", "1w"]
 
 
 class ForecastRequest(BaseModel):
-    start_datetime: str = Field(..., description="ISO datetime for first observation")
-    granularity: Granularity = Field(..., description="Frequency of series")
-    series: list[float] = Field(..., min_length=10, description="Observed values")
+    start_datetime: str = Field("2026-01-01T00:00:00", description="ISO datetime for first observation")
+    granularity: Granularity = Field("1d", description="Frequency of series")
+    series: list[float] = Field(default_factory=list, description="Observed values")
     horizon: int = Field(24, ge=1, le=1000)
     model: Literal["nixtla", "autogluon", "auto"] = "auto"
     series_name: str = "series_1"
+
+    use_m5: bool = False
+    m5_series_count: int = Field(3, ge=1, le=20)
+    compare_algorithms: bool = True
+    backtest: bool = True
 
     @field_validator("series")
     @classmethod
@@ -19,3 +24,9 @@ class ForecastRequest(BaseModel):
         if any(x is None for x in v):
             raise ValueError("series cannot contain nulls")
         return v
+
+    @model_validator(mode="after")
+    def validate_source(self) -> "ForecastRequest":
+        if not self.use_m5 and len(self.series) < 10:
+            raise ValueError("series must contain at least 10 points when use_m5=false")
+        return self
