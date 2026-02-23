@@ -186,10 +186,14 @@ const backtestBySeries = seriesIds.map((sid) => {
             <summary class="cursor-pointer font-semibold text-sm">Backfill testing + accuracies</summary>
             {back && back.windows.length > 0 ? (
               <div class="mt-3 space-y-4">
-                {back.windows.map((wObj) => (
-                  <div class="rounded border border-slate-700 p-3">
-                    <div class="text-xs text-slate-300 mb-2">Backtest window {wObj.window} · actual vs predicted</div>
-                    <div class="overflow-x-auto">
+                {back.windows.map((wObj) => {
+                  const firstScore = wObj.scores?.[0];
+                  const holdoutStart = firstScore ? String(firstScore.holdout_start) : 'n/a';
+                  const holdoutEnd = firstScore ? String(firstScore.holdout_end) : 'n/a';
+                  return (
+                  <details class="rounded border border-slate-700 p-3" open>
+                    <summary class="cursor-pointer text-xs text-slate-300 mb-2 font-semibold">Backtest window {wObj.window} · {holdoutStart} → {holdoutEnd}</summary>
+                    <div class="overflow-x-auto mt-2">
                       <svg viewBox={`0 0 ${wObj.chart.W} ${wObj.chart.H}`} class="min-w-[720px] w-full rounded bg-slate-950">
                         <rect x={wObj.chart.PAD.l} y={wObj.chart.PAD.t} width={wObj.chart.innerW} height={wObj.chart.innerH} fill="none" stroke="#1e293b" />
 
@@ -259,7 +263,9 @@ const backtestBySeries = seriesIds.map((sid) => {
                       </table>
                     </div>
                   </div>
-                ))}
+                  </details>
+                  );
+                })}
               </div>
             ) : (
               <p class="mt-2 text-sm text-slate-400">No backtest rows for this series yet (need more history or windows).</p>
