@@ -166,7 +166,7 @@ def _forecast_autogluon(df: pd.DataFrame, horizon: int) -> pd.DataFrame:
     try:
         from autogluon.timeseries import TimeSeriesDataFrame, TimeSeriesPredictor
     except Exception as exc:  # pragma: no cover
-        raise RuntimeError("AutoGluon not installed. Install with: pip install 'weatherman[autogluon]'") from exc
+        raise RuntimeError("AutoGluon not installed. Install with: pip install 'forecastingapi[autogluon]'") from exc
 
     ag_df = TimeSeriesDataFrame.from_data_frame(df, id_column="unique_id", timestamp_column="ds")
     predictor = TimeSeriesPredictor(prediction_length=horizon, target="y", eval_metric="MASE")

@@ -25,7 +25,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
       headers: {
         Accept: 'application/vnd.github+json',
         Authorization: `Bearer ${env.GITHUB_TOKEN}`,
-        'User-Agent': 'weatherman-run-status',
+        'User-Agent': 'forecastingapi-run-status',
       },
     });
 

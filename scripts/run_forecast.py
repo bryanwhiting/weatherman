@@ -43,7 +43,7 @@ def main() -> None:
         [
             "python",
             "-m",
-            "weatherman.cli",
+            "forecastingapi.cli",
             "--input",
             str(request_path),
             "--output",

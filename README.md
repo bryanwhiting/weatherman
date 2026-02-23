@@ -1,13 +1,13 @@
-# Weatherman
+# ForecastingAPI.com
 
-Weatherman is an open-source forecasting project with **two separate parts in one repo**:
+ForecastingAPI.com is an open-source forecasting project with **two separate parts in one repo**:
 
-- `weatherman/` → Python forecasting engine (Nixtla StatsForecast first)
+- `forecastingapi/` → Python forecasting engine API surface (backed by core models)
 - `site/` → Astro + Tailwind web app (submit payloads, track jobs, view reports)
 
 ## Architecture
 
-### 1) Python forecasting package (`weatherman/`)
+### 1) Python forecasting package (`forecastingapi/`)
 Input payload is compact:
 - `run_name_root`
 - `start_datetime`
@@ -48,7 +48,7 @@ Fill values in `.env.local` (never commit real secrets).
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
-python -m weatherman.cli --input workflows/example_payload.json --output site/src/data/forecasts/demo.json
+python -m forecastingapi.cli --input workflows/example_payload.json --output site/src/data/forecasts/demo.json
 ```
 
 ### Site
@@ -68,7 +68,7 @@ git push origin main
 ```
 
 ### 2) Create Cloudflare Pages project
-Project name used here: `weatherman`
+Project name used here: `forecastingapi`
 
 ### 3) Set GitHub repo secrets
 In `bryanwhiting/forecastingapi` → Settings → Secrets and variables → Actions:
@@ -77,7 +77,7 @@ In `bryanwhiting/forecastingapi` → Settings → Secrets and variables → Acti
 - `CLOUDFLARE_ACCOUNT_ID`
 
 ### 4) Set Cloudflare Pages Function secrets
-In Cloudflare Pages project (`weatherman`) → Settings → Environment variables / secrets:
+In Cloudflare Pages project (`forecastingapi`) → Settings → Environment variables / secrets:
 
 - `GITHUB_TOKEN` (PAT with repo/workflow permissions)
 - `ALLOWED_REPO` (e.g. `bryanwhiting/forecastingapi`)

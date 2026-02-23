@@ -23,10 +23,11 @@ autogluon = ["autogluon.timeseries>=1.2"]
 dev = ["pytest>=8.0", "ruff>=0.6"]
 
 [project.scripts]
+forecastingapi = "forecastingapi.cli:main"
 weatherman = "weatherman.cli:main"
 
 [tool.setuptools]
-packages = ["weatherman"]
+packages = ["weatherman", "forecastingapi"]
 
 [tool.ruff]
 line-length = 100

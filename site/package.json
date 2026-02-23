@@ -1,5 +1,5 @@
 {
-  "name": "weatherman-site",
+  "name": "forecastingapi-site",
   "private": true,
   "type": "module",
   "scripts": {

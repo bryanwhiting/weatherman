@@ -84,7 +84,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         Accept: 'application/vnd.github+json',
         Authorization: `Bearer ${env.GITHUB_TOKEN}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'weatherman-dispatch-function',
+        'User-Agent': 'forecastingapi-dispatch-function',
       },
       body: JSON.stringify({
         ref: 'main',
