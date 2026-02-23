@@ -67,7 +67,7 @@ const backtestLeaderboard = Object.values(
   </details>
 
   <script type="module" define:vars={{ points, models }}>
-    import Chart from 'chart.js/auto';
+    import Chart from 'https://cdn.jsdelivr.net/npm/chart.js@4.4.3/+esm';
     const parseDs = (v) => {
       const s = String(v ?? '');
       const normalized = s.includes('T') ? s : s.replace(' ', 'T');
