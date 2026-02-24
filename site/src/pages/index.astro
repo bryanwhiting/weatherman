@@ -100,6 +100,32 @@ const defaultPayload = JSON.stringify({
     .run-dot.in-progress { background: rgb(56,189,248); }
     .run-dot.success { background: rgb(34,197,94); }
     .run-dot.failure { background: rgb(239,68,68); }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-2px); }
+    }
+    .sk-card {
+      background: linear-gradient(165deg, rgba(30,41,59,.92), rgba(15,23,42,.95));
+      border: 1px solid rgba(148,163,184,.22);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -1px 0 rgba(0,0,0,.35),
+        0 12px 28px rgba(2,6,23,.45),
+        0 2px 0 rgba(15,23,42,.8);
+      border-radius: 16px;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      animation: cardFloat 6s ease-in-out infinite;
+    }
+    .sk-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56,189,248,.45);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.16),
+        inset 0 -1px 0 rgba(0,0,0,.4),
+        0 18px 36px rgba(2,6,23,.55),
+        0 0 0 1px rgba(56,189,248,.2);
+    }
   </style>
   <Navbar />
   <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
@@ -141,7 +167,7 @@ const defaultPayload = JSON.stringify({
       </svg>
     </div>
     <div class="relative z-10 grid gap-4 md:grid-cols-3">
-      <article class="group rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_0_0_1px_rgba(56,189,248,0.06),0_14px_40px_rgba(2,6,23,0.45)] hover:border-sky-400/60 transition">
+      <article class="group sk-card rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_0_0_1px_rgba(56,189,248,0.06),0_14px_40px_rgba(2,6,23,0.45)] hover:border-sky-400/60 transition">
         <div class="flex items-center gap-3">
           <div class="h-8 w-8 rounded-full bg-sky-500/20 border border-sky-400/50 text-sky-300 text-sm font-bold grid place-items-center">1</div>
           <h3 class="font-semibold tracking-wide">Ingest</h3>
@@ -149,7 +175,7 @@ const defaultPayload = JSON.stringify({
         <p class="mt-3 text-sm text-slate-300">Paste one payload with multi-series data. Keep it compact and deterministic.</p>
       </article>
 
-      <article class="group rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_0_0_1px_rgba(56,189,248,0.06),0_14px_40px_rgba(2,6,23,0.45)] hover:border-violet-400/60 transition">
+      <article class="group sk-card rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_0_0_1px_rgba(56,189,248,0.06),0_14px_40px_rgba(2,6,23,0.45)] hover:border-violet-400/60 transition">
         <div class="flex items-center gap-3">
           <div class="h-8 w-8 rounded-full bg-violet-500/20 border border-violet-400/50 text-violet-300 text-sm font-bold grid place-items-center">2</div>
           <h3 class="font-semibold tracking-wide">Evaluate</h3>
@@ -157,7 +183,7 @@ const defaultPayload = JSON.stringify({
         <p class="mt-3 text-sm text-slate-300">Run rolling backtests with AutoARIMA + AutoETS, then compare SMAPE by model/window.</p>
       </article>
 
-      <article class="group rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_0_0_1px_rgba(56,189,248,0.06),0_14px_40px_rgba(2,6,23,0.45)] hover:border-emerald-400/60 transition">
+      <article class="group sk-card rounded-2xl border border-slate-700 bg-slate-900/70 p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_0_0_1px_rgba(56,189,248,0.06),0_14px_40px_rgba(2,6,23,0.45)] hover:border-emerald-400/60 transition">
         <div class="flex items-center gap-3">
           <div class="h-8 w-8 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-sm font-bold grid place-items-center">3</div>
           <h3 class="font-semibold tracking-wide">Ship</h3>
@@ -167,7 +193,7 @@ const defaultPayload = JSON.stringify({
     </div>
   </section>
 
-  <section id="payload-form" class="mt-5 rounded-2xl border border-slate-600/80 bg-slate-900/75 p-4 md:p-6 shadow-[0_16px_50px_rgba(2,6,23,0.45),0_0_0_1px_rgba(56,189,248,0.08)]">
+  <section id="payload-form" class="mt-5 sk-card rounded-2xl border border-slate-600/80 bg-slate-900/75 p-4 md:p-6 shadow-[0_16px_50px_rgba(2,6,23,0.45),0_0_0_1px_rgba(56,189,248,0.08)]">
     <h2 class="text-2xl font-semibold">Enter Payload, get Forecasts</h2>
     <p class="mt-1 text-sm text-slate-300">Supply your own payload, or use our M5 demo</p>
 
@@ -223,12 +249,12 @@ const defaultPayload = JSON.stringify({
     </div>
   </section>
 
-  <section class="mt-5 rounded-2xl border border-slate-600/80 bg-slate-900/75 p-4 md:p-6 shadow-[0_16px_50px_rgba(2,6,23,0.45),0_0_0_1px_rgba(99,102,241,0.08)]">
+  <section class="mt-5 sk-card rounded-2xl border border-slate-600/80 bg-slate-900/75 p-4 md:p-6 shadow-[0_16px_50px_rgba(2,6,23,0.45),0_0_0_1px_rgba(99,102,241,0.08)]">
     <h2 class="text-xl font-semibold">All Runs</h2>
     <p class="mt-1 text-sm text-slate-300">Most recent forecast outputs available right now.</p>
     <div class="mt-4 grid gap-3 md:grid-cols-2">
       {runs.map((run) => (
-        <article class="rounded-xl border border-slate-700 bg-slate-900/50 p-4 transition hover:border-sky-500/60 hover:shadow-[0_0_0_1px_rgba(56,189,248,0.18),0_18px_40px_rgba(2,6,23,0.45)]">
+        <article class="sk-card rounded-xl border border-slate-700 bg-slate-900/50 p-4 transition hover:border-sky-500/60 hover:shadow-[0_0_0_1px_rgba(56,189,248,0.18),0_18px_40px_rgba(2,6,23,0.45)]">
           <h3 class="font-semibold text-sky-300"><a href={run.path}>{run.slug}</a></h3>
           <p class="mt-1 text-xs text-slate-400">{run.backend} · {run.granularity} · horizon {run.horizon}</p>
           <p class="text-xs text-slate-400">history {run.history_points} · forecast {run.forecast_points}</p>
