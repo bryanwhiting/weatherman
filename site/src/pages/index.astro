@@ -417,6 +417,12 @@ const defaultPayload = JSON.stringify({
       }).join('');
     };
 
+    const removeRun = (slug) => {
+      const runs = loadRuns().filter((r) => r.slug !== slug);
+      saveRuns(runs);
+      renderRuns(runs);
+    };
+
     const upsertRun = (entry) => {
       const runs = loadRuns();
       const idx = runs.findIndex((r) => r.slug === entry.slug);
@@ -481,9 +487,10 @@ const defaultPayload = JSON.stringify({
     payloadTab?.addEventListener('click', () => setMode(false));
     testTab?.addEventListener('click', () => setMode(true));
 
-    const existing = loadRuns();
+    const existing = loadRuns().filter((r) => r.status !== 'completed');
+    saveRuns(existing);
     renderRuns(existing);
-    existing.filter((r) => r.status && r.status !== 'completed').forEach((r) => {
+    existing.forEach((r) => {
       const statusUrl = r.status_url || `/api/run-status?slug=${encodeURIComponent(r.slug)}`;
       pollRun(r.slug, statusUrl, r.actions_url);
     });
