@@ -26,7 +26,7 @@ const timestampPrefix = (): string => {
   const hh = String(pst.getHours()).padStart(2, '0');
   const mi = String(pst.getMinutes()).padStart(2, '0');
   const ss = String(pst.getSeconds()).padStart(2, '0');
-  return `${yyyy}${mm}${dd}-${hh}${mi}${ss}-pst`;
+  return `${yyyy}${mm}${dd}-${hh}${mi}${ss}`;
 };
 
 export const onRequestOptions = async () => {

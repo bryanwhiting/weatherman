@@ -11,7 +11,7 @@ const d = String(pst.getDate()).padStart(2, '0');
 const h = String(pst.getHours()).padStart(2, '0');
 const mi = String(pst.getMinutes()).padStart(2, '0');
 const s = String(pst.getSeconds()).padStart(2, '0');
-const version = `v0.${y}${mo}${d}-${h}${mi}${s}-pst-${gitHash}`;
+const version = `v0.${y}${mo}${d}-${h}${mi}${s}-${gitHash}`;
 ---
 <nav class="flex flex-wrap items-start justify-between gap-3">
   <div class="flex flex-col">
